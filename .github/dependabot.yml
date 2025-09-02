@@ -1,0 +1,37 @@
+# Basic dependabot.yml file with
+# minimum configuration for two package managers
+
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      # Specify time for the first day of the week
+      day: "monday"
+      # Specify time (UTC)
+      time: "09:00"
+      # Set timezone
+      timezone: "America/Mexico_City"
+    # Limit to 5 open pull requests for npm dependencies
+    open-pull-requests-limit: 5
+    # Specify labels for pull requests for version updates
+    labels:
+      - "dependencies"
+      - "npm"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Mexico_City"
+    # Limit to 5 open pull requests for GitHub Actions
+    open-pull-requests-limit: 5
+    # Specify labels for pull requests for version updates
+    labels:
+      - "dependencies"
+      - "github-actions"

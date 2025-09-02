@@ -1,0 +1,15 @@
+# Estos propietarios serán los responsables por todo el código
+# cuando no se especifique un propietario específico para un archivo
+* @ojpb2000
+
+# Archivos específicos del dashboard
+*.html @ojpb2000
+*.js @ojpb2000
+*.css @ojpb2000
+
+# Scripts de Python
+*.py @ojpb2000
+
+# Documentación
+README.md @ojpb2000
+*.md @ojpb2000
