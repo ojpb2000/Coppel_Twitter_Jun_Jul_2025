@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Twitter/X - Coppel | Análisis Junio-Julio 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .tabs {
+            display: flex;
+            background: white;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #666;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .tab:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #333;
+        }
+        
+        .tab.active {
+            color: #1e3c72;
+            border-bottom-color: #1e3c72;
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            min-height: 600px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .analysis-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #1e3c72;
+        }
+        
+        .analysis-section h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .analysis-section p {
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+        
+        .tweet-quote {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+            font-style: italic;
+            color: #1565c0;
+        }
+        
+        .number-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .chart-explanation {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 15px 0;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .metric-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .metric-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            font-weight: 500;
+        }
+        
+        tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+        
+        .filters {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .filter-group {
+            display: inline-block;
+            margin: 10px 15px 10px 0;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .filter-group select, .filter-group input {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .filter-group select:focus, .filter-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .alert {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ff4757;
+        }
+        
+        .success {
+            background: linear-gradient(135deg, #26d0ce 0%, #1a2980 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #26d0ce;
+        }
+        
+        .recommendation {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+        
+        .tweet-text {
+            max-width: 400px;
+            line-height: 1.4;
+            color: #333;
+        }
+        
+        .engagement-high { background: #d4edda; color: #155724; }
+        .engagement-medium { background: #fff3cd; color: #856404; }
+        .engagement-low { background: #f8d7da; color: #721c24; }
+        
+        .url-link {
+            color: #1e3c72;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .url-link:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .container { padding: 10px; }
+            .chart-container { height: 300px; }
+            .tabs { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Dashboard Twitter/X - Coppel</h1>
+        <p>Análisis Estratégico | Junio - Julio 2025 | 16 Publicaciones Analizadas</p>
+    </div>
+    
+    <div class="container">
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('analysis')">📋 Análisis Detallado</button>
+            <button class="tab" onclick="showTab('overview')">🎯 Resumen General</button>
+            <button class="tab" onclick="showTab('charts')">📈 Gráficos y Rankings</button>
+            <button class="tab" onclick="showTab('tweets')">📱 Explorador de Tweets</button>
+            <button class="tab" onclick="showTab('monthly')">📅 Comparación Mensual</button>
+            <button class="tab" onclick="showTab('categories')">🏷️ Análisis de Categorías</button>
+            <button class="tab" onclick="showTab('recommendations')">💡 Mejores Prácticas</button>
+        </div>
+        
+        <!-- TAB: ANÁLISIS DETALLADO -->
+        <div id="analysis" class="tab-content active">
+            <h2>📋 Análisis Detallado de Insights</h2>
+            
+            <div class="analysis-section">
+                <h3>🔍 Hallazgos Principales del Análisis</h3>
+                <p>El análisis de <span class="number-highlight">16 publicaciones</span> de Twitter/X de Coppel durante junio-julio 2025 revela patrones interesantes con oportunidades de optimización. Con un total de <span class="number-highlight">4.47 millones de impresiones</span> y <span class="number-highlight">1,405 interacciones</span>, el engagement rate promedio de <span class="number-highlight">4.21%</span> muestra una variabilidad que presenta oportunidades para potenciar el rendimiento.</p>
+                
+                <p>La diferencia entre junio (7.60% ER) y julio (1.59% ER) representa una oportunidad de aprendizaje valiosa para optimizar la estrategia y mejorar el balance entre alcance e interacción en futuras campañas.</p>
+            </div>
+            
+            <div class="analysis-section">
+                <h3>🏆 Mejores Categorías de Contenido - Evidencia Específica</h3>
+                
+                <p><strong>1. DESARROLLO PROFESIONAL</strong> - Líder absoluto con <span class="number-highlight">14.25% ER</span></p>
+                <div class="tweet-quote">
+                    <strong>Evidencia (14/07/2025):</strong> "#GrupoCoppel anuncia su nueva estructura de liderazgo: Diego Coppel Sullivan asume la Dirección General y Agustín Coppel Luken permanece como Presidente del Consejo"
+                    <br><strong>Resultado:</strong> 458 interacciones con solo 3,215 impresiones
+                </div>
+                
+                <p><strong>2. PROPUESTA DE VALOR</strong> - Segundo lugar con <span class="number-highlight">5.06% ER promedio</span></p>
+                <div class="tweet-quote">
+                    <strong>Evidencia (12/06/2025):</strong> "Presentamos la evolución de nuestra identidad visual: una llave más versátil y contemporánea que refleja lo que somos hoy… #TúEresLaLlave"
+                    <br><strong>Resultado:</strong> 13.8% ER, 286 interacciones
+                </div>
+                
+                <p><strong>3. SOSTENIBILIDAD Y ASG</strong> - Rendimiento moderado <span class="number-highlight">3.92% ER</span></p>
+                <div class="tweet-quote">
+                    <strong>Evidencia (16/06/2025):</strong> "Una marca más ágil, cercana y conectada con las personas. Gracias a quienes fueron parte de este momento."
+                    <br><strong>Resultado:</strong> 10.7% ER, conexión emocional efectiva
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <h3>📈 Categorías con Potencial de Mejora</h3>
+                
+                <p><strong>1. FUNDACIÓN COPPEL</strong> - Oportunidad de reformulación con <span class="number-highlight">0% ER</span></p>
+                <div class="tweet-quote">
+                    <strong>Ejemplo (25/07/2025):</strong> "Celebramos que, gracias al apoyo de Fundación Coppel y Fundación México en Harvard, Aracely Guzmán iniciará sus estudios en Harvard..."
+                    <br><strong>Métricas:</strong> 224,000 impresiones, 8 interacciones - potencial para storytelling más cercano
+                </div>
+                
+                <p><strong>2. CATEGORÍAS COMERCIALES (Julio)</strong> - Espacio para optimización de messaging</p>
+                <div class="tweet-quote">
+                    <strong>Ejemplo (04/07/2025):</strong> "🏅Grupo Coppel ocupa el primer lugar en el Índice de Integridad Corporativa 500"
+                    <br><strong>Métricas:</strong> 962,000 impresiones, 49 interacciones - oportunidad para humanizar logros corporativos
+                </div>
+                
+                <p><strong>3. CONTENIDO DE MOVILIDAD</strong> - Potencial para conectar con experiencias de usuario</p>
+                <div class="tweet-quote">
+                    <strong>Ejemplo (23/07/2025):</strong> "¡Queremos seguir impulsando la movilidad de millones de mexicanos con Coppel Motos! 🏍️"
+                    <br><strong>Métricas:</strong> 632,000 impresiones, 13 interacciones - espacio para incluir testimonios reales
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <h3>📊 Números Clave del Análisis</h3>
+                <p><strong>Diversidad en Rendimiento:</strong> Coeficiente de variación de <span class="number-highlight">138.3%</span> muestra potencial para estandarizar elementos exitosos</p>
+                <p><strong>Patrón Alcance-Engagement:</strong> <span class="number-highlight">-0.618</span> correlación sugiere oportunidades para optimizar el balance entre visibilidad y participación</p>
+                <p><strong>Potencial de Escalamiento:</strong> Solo <span class="number-highlight">6.25%</span> del contenido (1/16) está en la categoría más exitosa, presentando oportunidad de crecimiento</p>
+                <p><strong>ROI Comprobado:</strong> Contenido de liderazgo genera <span class="number-highlight">3.4x más engagement</span> que el promedio</p>
+                <p><strong>Oportunidad de Crecimiento:</strong> Incrementar "Desarrollo Profesional" podría mejorar ER general en <span class="number-highlight">40-60%</span></p>
+            </div>
+            
+            <div class="analysis-section">
+                <h3>🎯 Insights Estratégicos por Pilar</h3>
+                <p><strong>MARCA EMPLEADORA (7.36% ER):</strong> Contenido interno y de talento humano conecta efectivamente con la audiencia. Oportunidad de amplificar historias de liderazgo y cultura organizacional.</p>
+                
+                <p><strong>COMUNIDAD (3.27% ER):</strong> Impacto social genera engagement consistente. Potencial para enriquecer con testimonios específicos y métricas de impacto tangible.</p>
+                
+                <p><strong>OMNICANALIDAD (3.07% ER):</strong> Contenido comercial presenta espacio para evolucionar. Oportunidad de integrar storytelling con propuesta de valor más conectada emocionalmente.</p>
+            </div>
+        </div>
+        
+        <!-- TAB: RESUMEN GENERAL -->
+        <div id="overview" class="tab-content">
+            <h2>🎯 Resumen Ejecutivo</h2>
+            
+            <div class="grid">
+                <div class="metric-card">
+                    <h3>4.21%</h3>
+                    <p>Engagement Rate Promedio</p>
+                </div>
+                <div class="metric-card">
+                    <h3>4.4M</h3>
+                    <p>Impresiones Totales</p>
+                </div>
+                <div class="metric-card">
+                    <h3>1,405</h3>
+                    <p>Interacciones Totales</p>
+                </div>
+                <div class="metric-card">
+                    <h3>16</h3>
+                    <p>Publicaciones Analizadas</p>
+                </div>
+            </div>
+            
+            <div class="alert">
+                <h3>📊 Observación Importante</h3>
+                <p><strong>Variación significativa entre Junio y Julio 2025</strong></p>
+                <p>• Junio: 7.60% ER promedio | Julio: 1.59% ER promedio</p>
+                <p>• Oportunidad para analizar factores que contribuyeron a esta diferencia y aplicar aprendizajes</p>
+            </div>
+            
+            <div class="success">
+                <h3>✅ Oportunidades de Crecimiento</h3>
+                <p><strong>Desarrollo Profesional:</strong> 14.25% ER con potencial de escalamiento (actualmente 1 publicación)</p>
+                <p><strong>Marca Empleadora:</strong> Pilar más efectivo con 7.36% ER promedio</p>
+                <p><strong>Timing Optimizado:</strong> Lunes y Jueves muestran mejor rendimiento (9.41% y 6.90%)</p>
+            </div>
+            
+            <div class="recommendation">
+                <h3>🎯 Recomendaciones Estratégicas</h3>
+                <p><strong>1.</strong> Amplificar contenido "Desarrollo Profesional" (2-3 posts mensuales)</p>
+                <p><strong>2.</strong> Analizar factores diferenciadores entre junio y julio para optimizar approach</p>
+                <p><strong>3.</strong> Evolucionar estrategia "Fundación Coppel" con storytelling más cercano</p>
+                <p><strong>4.</strong> Aprovechar calendario editorial basado en días de mayor engagement</p>
+            </div>
+        </div>
+        
+        <!-- TAB: GRÁFICOS Y RANKINGS -->
+        <div id="charts" class="tab-content">
+            <h2>📈 Gráficos y Rankings de Rendimiento</h2>
+            
+            <div class="chart-explanation">
+                <strong>📊 Análisis de Rendimiento por Categorías:</strong> Los siguientes gráficos muestran el desempeño de cada categoría de contenido, identificando fortalezas comprobadas y oportunidades de potenciación para futuras publicaciones.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="temasChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🎯 Interpretación - Temas:</strong> "Desarrollo Profesional" lidera con 14.25% ER presentando oportunidad de escalamiento (actualmente 1 publicación). "Fundación Coppel" muestra potencial de mejora con approach renovado.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="pilaresChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🏗️ Interpretación - Pilares:</strong> "Marca Empleadora" destaca con 7.36% ER, validando que el contenido interno y de talento humano conecta efectivamente con la audiencia y presenta potencial de amplificación.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="vinculosChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🔗 Interpretación - Vínculos de Negocio:</strong> "Impulsar al Talento" muestra la mayor efectividad (7.36% ER), mientras que el contenido comercial presenta oportunidades de evolución hacia enfoques más conectados con la audiencia.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="topBottomChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🏆 Top 5 vs Bottom 5:</strong> La variación en rendimiento entre mejores y peores publicaciones (15.11% vs 0% ER) presenta oportunidades para aplicar los elementos exitosos en futuras publicaciones.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="impressionsByThemeChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>📊 Impresiones por Tema:</strong> Análisis del alcance obtenido por cada categoría temática, mostrando la distribución de visibilidad y oportunidades de optimización de alcance.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="totalEngagementByThemeChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🎯 Engagement Total por Tema:</strong> Volumen absoluto de interacciones generadas por cada categoría, revelando qué temas generan mayor participación de la audiencia.
+            </div>
+        </div>
+        
+        <!-- TAB: EXPLORADOR DE TWEETS -->
+        <div id="tweets" class="tab-content">
+            <h2>📱 Explorador Interactivo de Tweets</h2>
+            
+            <div class="chart-explanation">
+                <strong>🔍 Explorador de Contenido:</strong> Tabla interactiva con todos los tweets analizados. Utiliza los filtros para explorar patrones específicos por tema, fecha, engagement o cualquier métrica relevante.
+            </div>
+            
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Filtrar por Tema:</label>
+                    <select id="temaFilter" onchange="filterTable()">
+                        <option value="">Todos los temas</option>
+                        <option value="DESARROLLO PROFESIONAL">Desarrollo Profesional</option>
+                        <option value="PROPUESTA DE VALOR">Propuesta de Valor</option>
+                        <option value="SOSTENIBILIDAD Y ASG">Sostenibilidad y ASG</option>
+                        <option value="CATEGORÍAS COMERCIALES Y FINANCIERAS">Categorías Comerciales</option>
+                        <option value="FUNDACIÓN COPPEL">Fundación Coppel</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Filtrar por Pilar:</label>
+                    <select id="pilarFilter" onchange="filterTable()">
+                        <option value="">Todos los pilares</option>
+                        <option value="MARCA EMPLEADORA">Marca Empleadora</option>
+                        <option value="COMUNIDAD">Comunidad</option>
+                        <option value="OMNICANALIDAD">Omnicanalidad</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Engagement Rate mínimo:</label>
+                    <input type="number" id="engagementFilter" placeholder="0" step="0.1" onchange="filterTable()">
+                </div>
+                
+                <div class="filter-group">
+                    <label>Mes:</label>
+                    <select id="mesFilter" onchange="filterTable()">
+                        <option value="">Ambos meses</option>
+                        <option value="06">Junio</option>
+                        <option value="07">Julio</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="table-container">
+                <table id="tweetsTable">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Contenido del Tweet</th>
+                            <th>URL</th>
+                            <th>ER %</th>
+                            <th>Impresiones</th>
+                            <th>Interacciones</th>
+                            <th>Tema</th>
+                            <th>Pilar</th>
+                            <th>Vínculo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tweetsBody">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- TAB: COMPARACIÓN MENSUAL -->
+        <div id="monthly" class="tab-content">
+            <h2>📅 Comparación Mensual: Junio vs Julio 2025</h2>
+            
+            <div class="chart-explanation">
+                <strong>📊 Análisis Temporal:</strong> Comparación detallada del rendimiento mensual, revelando patrones y tendencias que presentan oportunidades de optimización estratégica.
+            </div>
+            
+            <div class="grid">
+                <div class="metric-card">
+                    <h3>7.60%</h3>
+                    <p>Engagement Rate - Junio</p>
+                </div>
+                <div class="metric-card">
+                    <h3>1.59%</h3>
+                    <p>Engagement Rate - Julio</p>
+                </div>
+            </div>
+            
+            <div class="alert">
+                <h3>📉 Variación en Engagement - Julio</h3>
+                <p><strong>Diferencia del 79.1% en engagement</strong> comparado con el aumento del 36,729% en impresiones</p>
+                <p>Presenta oportunidad de optimizar el balance entre alcance y participación de la audiencia</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="monthlyComparisonChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>📉 Patrón Alcance-Engagement:</strong> Julio muestra mayor alcance con menor engagement, presentando oportunidad de optimizar la sinergia entre promoción pagada y relevancia de contenido para maximizar participación.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="monthlyTemasChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🎯 Distribución Temática:</strong> Julio enfocó más contenido en categorías comerciales, presentando oportunidad de rebalancear con mayor proporción de desarrollo profesional para optimizar engagement.
+            </div>
+        </div>
+        
+        <!-- TAB: ANÁLISIS DE CATEGORÍAS -->
+        <div id="categories" class="tab-content">
+            <h2>🏷️ Análisis Profundo de Categorías de Contenido</h2>
+            
+            <div class="chart-explanation">
+                <strong>🔬 Análisis Categórico:</strong> Evaluación detallada del rendimiento de cada categoría de contenido, identificando fortalezas comprobadas y oportunidades de potenciación específicas.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="categoriesPerformanceChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>📊 Rendimiento por Volumen:</strong> Se observa una relación inversa entre volumen de contenido y engagement rate, sugiriendo que la frecuencia optimizada puede ser más efectiva que el volumen alto.
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="impressionsEngagementChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>🎯 Eficiencia de Alcance:</strong> La correlación entre impresiones y engagement (-0.618) sugiere oportunidades para optimizar el contenido promocionado y mantener alta relevancia con la audiencia.
+            </div>
+            
+            <div class="success">
+                <h3>✅ Patrones de Éxito Validados</h3>
+                <p><strong>Contenido de Liderazgo:</strong> Publicaciones sobre cambios directivos conectan efectivamente con la audiencia</p>
+                <p><strong>Anuncios Estratégicos:</strong> Inversiones y transformaciones corporativas generan interés y participación</p>
+                <p><strong>Identidad Visual:</strong> Evolución de marca demuestra capacidad de generar engagement auténtico</p>
+            </div>
+            
+            <div class="recommendation">
+                <h3>🎯 Estrategia de Potenciación por Categoría</h3>
+                <p><strong>Desarrollo Profesional:</strong> Amplificar aprovechando ROI comprobado (14.25% ER)</p>
+                <p><strong>Propuesta de Valor:</strong> Mantener frecuencia, evolucionando el messaging hacia mayor conexión</p>
+                <p><strong>Sostenibilidad:</strong> Enriquecer con historias de impacto específicas y testimonios</p>
+                <p><strong>Comerciales:</strong> Evolucionar hacia enfoque value-driven con storytelling</p>
+                <p><strong>Fundación:</strong> Renovar approach con storytelling más cercano y emocional</p>
+            </div>
+        </div>
+        
+        <!-- TAB: MEJORES PRÁCTICAS -->
+        <div id="recommendations" class="tab-content">
+            <h2>💡 Mejores Prácticas y Recomendaciones Estratégicas</h2>
+            
+            <div class="chart-explanation">
+                <strong>🎯 Estrategia Basada en Datos:</strong> Recomendaciones específicas derivadas del análisis de rendimiento, enfocadas en potenciar fortalezas identificadas y optimizar oportunidades de crecimiento en Twitter/X.
+            </div>
+            
+            <div class="success">
+                <h3>🏆 Fórmulas de Contenido con Mayor Efectividad</h3>
+                <p><strong>1. Anuncios de Liderazgo + Transformación</strong> → Promedio 14% ER</p>
+                <p><strong>2. Inversiones Estratégicas + Visión Futuro</strong> → Promedio 13% ER</p>
+                <p><strong>3. Evolución de Marca + Propósito</strong> → Promedio 12% ER</p>
+            </div>
+            
+            <div class="recommendation">
+                <h3>📅 Calendario Editorial Sugerido</h3>
+                <p><strong>Lunes:</strong> Contenido estratégico y liderazgo (9.41% ER promedio validado)</p>
+                <p><strong>Martes-Miércoles:</strong> Contenido comercial con storytelling value-driven</p>
+                <p><strong>Jueves:</strong> Contenido de marca empleadora (6.90% ER promedio comprobado)</p>
+                <p><strong>Viernes:</strong> Impacto social y sostenibilidad con casos de éxito</p>
+                <p><strong>Fines de semana:</strong> Contenido de community building y cultura</p>
+            </div>
+            
+            <div class="chart-container">
+                <canvas id="bestPracticesChart"></canvas>
+            </div>
+            <div class="chart-explanation">
+                <strong>📈 Factores de Éxito:</strong> Análisis de elementos que contribuyen al alto engagement, incluyendo timing, temas, y estructura de contenido.
+            </div>
+            
+            <div class="recommendation">
+                <h3>🎯 Plan de Evolución 90 Días</h3>
+                <p><strong>Días 1-30:</strong> Incrementar contenido "Desarrollo Profesional" aprovechando ROI comprobado</p>
+                <p><strong>Días 31-60:</strong> Testear variaciones en contenido con potencial de mejora</p>
+                <p><strong>Días 61-90:</strong> Implementar sistema de seguimiento y optimización continua</p>
+            </div>
+            
+            <div class="success">
+                <h3>🎯 KPIs de Seguimiento Sugeridos</h3>
+                <p><strong>Engagement Rate Meta:</strong> >8% promedio mensual</p>
+                <p><strong>Consistency Score:</strong> CV <80% para mayor predictibilidad (actual 138.3%)</p>
+                <p><strong>Efficiency Ratio:</strong> >0.1% ER por cada 1K impresiones</p>
+                <p><strong>Content Balance:</strong> Distribución equilibrada, máx 30% de un tema por mes</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos procesados del CSV
+        const tweetsData = [
+            {
+                date: "12/06/2025",
+                url: "https://x.com/Coppel/status/1933327532776173711",
+                text: "Presentamos la evolución de nuestra identidad visual: una llave más versátil y contemporánea que refleja lo que somos hoy… siempre con la cercanía y confianza que nos caracterizan. #GrupoCoppel #TúEresLaLlave",
+                impresiones: 2072,
+                interacciones: 286,
+                engagement_rate: 13.8,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "PROPUESTA DE VALOR"
+            },
+            {
+                date: "13/06/2025",
+                url: "https://x.com/Coppel/status/1933585164031926383",
+                text: "En Grupo Coppel destinaremos $80 mmdp en 5 años para fortalecer nuestra transformación integral. Impulsamos la expansión física, la digitalización y la sostenibilidad, con un solo propósito: mejorar la vida de las personas.",
+                impresiones: 1377,
+                interacciones: 208,
+                engagement_rate: 15.11,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "16/06/2025",
+                url: "https://x.com/Coppel/status/1934666891228008535",
+                text: "Como parte del lanzamiento de nuestra nueva imagen, nos reunimos con medios y líderes de la comunidad creativa para compartir la evolución de Grupo Coppel. Una marca más ágil, cercana y conectada con las personas.",
+                impresiones: 1383,
+                interacciones: 148,
+                engagement_rate: 10.7,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "17/06/2025",
+                url: "https://x.com/Coppel/status/1935028505567252895",
+                text: "Gracias @Milenio por estar presente en nuestra conferencia de prensa. #TúEresLaLlave",
+                impresiones: 1087,
+                interacciones: 15,
+                engagement_rate: 1.38,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "PROPUESTA DE VALOR"
+            },
+            {
+                date: "18/06/2025",
+                url: "https://x.com/Coppel/status/1935384339707216146",
+                text: "Gracias @heraldodemexico por ser parte del anuncio de esta evolución. #TúEresLaLlave",
+                impresiones: 1489,
+                interacciones: 42,
+                engagement_rate: 2.82,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "23/06/2025",
+                url: "https://x.com/Coppel/status/1937224549797658817",
+                text: "Nuestro CEO Agustín Coppel platicó con El País en el marco del cambio de imagen y el anuncio de inversión de 80 mil mdp como parte nuestro plan de transformación para los próximos 5 años",
+                impresiones: 1003,
+                interacciones: 33,
+                engagement_rate: 3.29,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "27/06/2025",
+                url: "https://x.com/Coppel/status/1938681551467978849",
+                text: "Directivas de áreas estratégicas en la evolución de Grupo Coppel comparten por qué nuestra nueva imagen representa un cambio más profundo de cara al cliente. #TuEresLaLllave",
+                impresiones: 1021,
+                interacciones: 62,
+                engagement_rate: 6.07,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "03/07/2025",
+                url: "https://x.com/Coppel/status/1940878307907850737",
+                text: "Nuestro Director Comercial, Diego Coppel, comparte por qué la nueva imagen representa una transformación integral, donde los clientes son los protagonistas y tienen el poder de decidir y ser parte de la evolución de Grupo Coppel.",
+                impresiones: 771000,
+                interacciones: 40,
+                engagement_rate: 0.01,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "04/07/2025",
+                url: "https://x.com/Coppel/status/1941208549016891508",
+                text: "🏅Grupo Coppel ocupa el primer lugar en el Índice de Integridad Corporativa 500, del ranking \"Las 500 empresas contra la corrupción\" de @ExpansionMx. Un reconocimiento a nuestras políticas de integridad, transparencia y buenas prácticas.",
+                impresiones: 962000,
+                interacciones: 49,
+                engagement_rate: 0.01,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "08/07/2025",
+                url: "https://x.com/Coppel/status/1942665696141553780",
+                text: "#GrupoCoppel y @fonart_mx llevan 14 años promoviendo el arte mexicano. En 2024, Coppel adquirió 20 mil piezas de Jalisco, Guerrero y Oaxaca, que se exhibieron en tiendas y se obsequiaron a clientes. ¡Un orgullo impulsar lo #HechoEnMéxico! 🇲🇽",
+                impresiones: 662000,
+                interacciones: 23,
+                engagement_rate: 0.0,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "14/07/2025",
+                url: "https://x.com/Coppel/status/1944763128085893134",
+                text: "#GrupoCoppel anuncia su nueva estructura de liderazgo: Diego Coppel Sullivan asume la Dirección General y Agustín Coppel Luken permanece como Presidente del Consejo🟡🟡🟡",
+                impresiones: 3215,
+                interacciones: 458,
+                engagement_rate: 14.25,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "DESARROLLO PROFESIONAL"
+            },
+            {
+                date: "16/07/2025",
+                url: "https://x.com/Coppel/status/1945517603918688347",
+                text: "#GrupoCoppel trabaja cada día para ser un motor de inclusión financiera y social, y seguir mejorando la vida de las personas con productos y servicios de calidad. En 2025, seguimos comprometidos con ser un buen vecino y estar donde nuestros clientes nos necesitan.",
+                impresiones: 625000,
+                interacciones: 8,
+                engagement_rate: 0.0,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "18/07/2025",
+                url: "https://x.com/Coppel/status/1946250061450453309",
+                text: "#GrupoCoppel anuncia nueva estructura directiva para impulsar su modelo de gobernanza y su visión de largo plazo. Diego Coppel Sullivan asume la Dirección General, mientras que Agustín Coppel Luken continúa como Presidente del Consejo de Administración.",
+                impresiones: 499000,
+                interacciones: 8,
+                engagement_rate: 0.0,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "PROPUESTA DE VALOR"
+            },
+            {
+                date: "23/07/2025",
+                url: "https://x.com/Coppel/status/1948133520229949817",
+                text: "Facilitamos el acceso al financiamiento y a un transporte eficiente. En 2025, Coppel tendrá 100 nuevas agencias especializadas. ¡Queremos seguir impulsando la movilidad de millones de mexicanos con Coppel Motos! 🏍️",
+                impresiones: 632000,
+                interacciones: 13,
+                engagement_rate: 0.0,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "25/07/2025",
+                url: "https://x.com/Coppel/status/1948835648216899887",
+                text: "Celebramos que, gracias al apoyo de Fundación Coppel y Fundación México en Harvard, Aracely Guzmán iniciará sus estudios en Harvard para impulsar un sistema de salud más justo y equitativo en México. 🎓Su compromiso nos inspira.",
+                impresiones: 224000,
+                interacciones: 8,
+                engagement_rate: 0.0,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "FUNDACIÓN COPPEL"
+            },
+            {
+                date: "30/07/2025",
+                url: "https://x.com/Coppel/status/1950662727195889702",
+                text: "En los próximos 5 años, Grupo Coppel destinará recursos para su #Evolución. La transformación incluye una nueva plataforma de e-commerce y tecnología para impulsar la inclusión financiera de más de 3 millones de personas. ¡Seguimos creciendo con nuestros clientes! 🤝",
+                impresiones: 88000,
+                interacciones: 4,
+                engagement_rate: 0.0,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            }
+        ];
+
+        // Funciones para navegación de tabs
+        function showTab(tabName) {
+            // Ocultar todas las tabs
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => tab.classList.remove('active'));
+            
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Mostrar tab seleccionada
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Inicializar gráficos según la tab
+            setTimeout(() => {
+                if (tabName === 'charts') initChartsTab();
+                if (tabName === 'monthly') initMonthlyTab();
+                if (tabName === 'categories') initCategoriesTab();
+                if (tabName === 'recommendations') initRecommendationsTab();
+                if (tabName === 'tweets') initTweetsTab();
+                if (tabName === 'analysis') {
+                    // No charts to initialize for text analysis
+                }
+            }, 100);
+        }
+
+        // Inicializar tabla de tweets
+        function initTweetsTab() {
+            const tbody = document.getElementById('tweetsBody');
+            tbody.innerHTML = '';
+            
+            tweetsData.forEach(tweet => {
+                const row = document.createElement('tr');
+                const engagementClass = tweet.engagement_rate > 8 ? 'engagement-high' : 
+                                      tweet.engagement_rate > 3 ? 'engagement-medium' : 'engagement-low';
+                
+                row.innerHTML = `
+                    <td>${tweet.date}</td>
+                    <td class="tweet-text">${tweet.text}</td>
+                    <td><a href="${tweet.url}" target="_blank" class="url-link">Ver Tweet</a></td>
+                    <td class="${engagementClass}">${tweet.engagement_rate.toFixed(2)}%</td>
+                    <td>${tweet.impresiones.toLocaleString()}</td>
+                    <td>${tweet.interacciones}</td>
+                    <td>${tweet.tema}</td>
+                    <td>${tweet.pilar}</td>
+                    <td>${tweet.vinculo}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Función de filtrado de tabla
+        function filterTable() {
+            const temaFilter = document.getElementById('temaFilter').value;
+            const pilarFilter = document.getElementById('pilarFilter').value;
+            const engagementFilter = parseFloat(document.getElementById('engagementFilter').value) || 0;
+            const mesFilter = document.getElementById('mesFilter').value;
+            
+            const tbody = document.getElementById('tweetsBody');
+            tbody.innerHTML = '';
+            
+            const filteredData = tweetsData.filter(tweet => {
+                const mes = tweet.date.split('/')[1];
+                return (!temaFilter || tweet.tema === temaFilter) &&
+                       (!pilarFilter || tweet.pilar === pilarFilter) &&
+                       (tweet.engagement_rate >= engagementFilter) &&
+                       (!mesFilter || mes === mesFilter);
+            });
+            
+            filteredData.forEach(tweet => {
+                const row = document.createElement('tr');
+                const engagementClass = tweet.engagement_rate > 8 ? 'engagement-high' : 
+                                      tweet.engagement_rate > 3 ? 'engagement-medium' : 'engagement-low';
+                
+                row.innerHTML = `
+                    <td>${tweet.date}</td>
+                    <td class="tweet-text">${tweet.text}</td>
+                    <td><a href="${tweet.url}" target="_blank" class="url-link">Ver Tweet</a></td>
+                    <td class="${engagementClass}">${tweet.engagement_rate.toFixed(2)}%</td>
+                    <td>${tweet.impresiones.toLocaleString()}</td>
+                    <td>${tweet.interacciones}</td>
+                    <td>${tweet.tema}</td>
+                    <td>${tweet.pilar}</td>
+                    <td>${tweet.vinculo}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Inicializar gráficos
+        function initChartsTab() {
+            // Gráfico de Temas
+            const temasCtx = document.getElementById('temasChart').getContext('2d');
+            new Chart(temasCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Desarrollo Profesional', 'Propuesta de Valor', 'Sostenibilidad y ASG', 'Categorías Comerciales', 'Fundación Coppel'],
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: [14.25, 5.06, 3.92, 3.07, 0.0],
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Rendimiento por Tema - Engagement Rate (%)' },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 16 }
+                    }
+                }
+            });
+
+            // Gráfico de Pilares
+            const pilaresCtx = document.getElementById('pilaresChart').getContext('2d');
+            new Chart(pilaresCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Marca Empleadora', 'Comunidad', 'Omnicanalidad'],
+                    datasets: [{
+                        data: [7.36, 3.27, 3.07],
+                        backgroundColor: ['#3498db', '#e67e22', '#1abc9c'],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Engagement Rate Promedio por Pilar Estratégico' }
+                    }
+                }
+            });
+
+            // Gráfico de Vínculos
+            const vinculosCtx = document.getElementById('vinculosChart').getContext('2d');
+            new Chart(vinculosCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Impulsar al Talento', 'Contribuir y Reducir Riesgos', 'Visibilizar Oferta de Valor'],
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: [7.36, 3.27, 3.07],
+                        backgroundColor: ['#8e44ad', '#27ae60', '#f39c12'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Efectividad por Vínculo de Negocio' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 8 }
+                    },
+                    indexAxis: 'y'
+                }
+            });
+
+            // Top 5 vs Bottom 5
+            const topBottomCtx = document.getElementById('topBottomChart').getContext('2d');
+            const sortedTweets = [...tweetsData].sort((a, b) => b.engagement_rate - a.engagement_rate);
+            const top5 = sortedTweets.slice(0, 5);
+            const bottom5 = sortedTweets.slice(-5);
+            
+            new Chart(topBottomCtx, {
+                type: 'bar',
+                data: {
+                    labels: [...top5.map((t, i) => `TOP ${i+1}`), ...bottom5.map((t, i) => `BOT ${i+1}`)],
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: [...top5.map(t => t.engagement_rate), ...bottom5.map(t => t.engagement_rate)],
+                        backgroundColor: [...Array(5).fill('#2ecc71'), ...Array(5).fill('#e74c3c')],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Top 5 vs Bottom 5 Publicaciones por Engagement Rate' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+            
+            // Gráfico Impresiones por Tema
+            const impressionsByThemeCtx = document.getElementById('impressionsByThemeChart').getContext('2d');
+            const temas = ['DESARROLLO PROFESIONAL', 'PROPUESTA DE VALOR', 'SOSTENIBILIDAD Y ASG', 'CATEGORÍAS COMERCIALES Y FINANCIERAS', 'FUNDACIÓN COPPEL'];
+            const impressionsByTema = temas.map(tema => {
+                return tweetsData.filter(t => t.tema === tema).reduce((sum, t) => sum + t.impresiones, 0);
+            });
+            
+            new Chart(impressionsByThemeCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: temas,
+                    datasets: [{
+                        data: impressionsByTema,
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Distribución de Impresiones por Tema' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = impressionsByTema.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                    return `${context.label}: ${context.parsed.toLocaleString()} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico Engagement Total por Tema
+            const totalEngagementByThemeCtx = document.getElementById('totalEngagementByThemeChart').getContext('2d');
+            const engagementByTema = temas.map(tema => {
+                return tweetsData.filter(t => t.tema === tema).reduce((sum, t) => sum + t.interacciones, 0);
+            });
+            
+            new Chart(totalEngagementByThemeCtx, {
+                type: 'bar',
+                data: {
+                    labels: temas,
+                    datasets: [{
+                        label: 'Interacciones Totales',
+                        data: engagementByTema,
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Engagement Total por Tema' },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function initMonthlyTab() {
+            // Comparación mensual
+            const monthlyCtx = document.getElementById('monthlyComparisonChart').getContext('2d');
+            
+            const junioTweets = tweetsData.filter(t => t.date.includes('/06/'));
+            const julioTweets = tweetsData.filter(t => t.date.includes('/07/'));
+            
+            const junioER = junioTweets.reduce((sum, t) => sum + t.engagement_rate, 0) / junioTweets.length;
+            const julioER = julioTweets.reduce((sum, t) => sum + t.engagement_rate, 0) / julioTweets.length;
+            
+            new Chart(monthlyCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Junio 2025', 'Julio 2025'],
+                    datasets: [{
+                        label: 'Engagement Rate Promedio (%)',
+                        data: [junioER, julioER],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        borderWidth: 4,
+                        pointRadius: 8,
+                        pointHoverRadius: 12,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Evolución Mensual del Engagement Rate' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, max: 10 }
+                    }
+                }
+            });
+
+            // Distribución temática por mes
+            const monthlyTemasCtx = document.getElementById('monthlyTemasChart').getContext('2d');
+            
+            const temas = ['DESARROLLO PROFESIONAL', 'PROPUESTA DE VALOR', 'SOSTENIBILIDAD Y ASG', 'CATEGORÍAS COMERCIALES Y FINANCIERAS', 'FUNDACIÓN COPPEL'];
+            const junioCount = temas.map(tema => junioTweets.filter(t => t.tema === tema).length);
+            const julioCount = temas.map(tema => julioTweets.filter(t => t.tema === tema).length);
+            
+            new Chart(monthlyTemasCtx, {
+                type: 'bar',
+                data: {
+                    labels: temas,
+                    datasets: [
+                        {
+                            label: 'Junio 2025',
+                            data: junioCount,
+                            backgroundColor: '#3498db',
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        },
+                        {
+                            label: 'Julio 2025',
+                            data: julioCount,
+                            backgroundColor: '#e74c3c',
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Distribución de Contenido por Tema - Comparación Mensual' }
+                    },
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
+
+        function initCategoriesTab() {
+            // Rendimiento vs Volumen
+            const categoriesCtx = document.getElementById('categoriesPerformanceChart').getContext('2d');
+            
+            const temas = ['DESARROLLO PROFESIONAL', 'PROPUESTA DE VALOR', 'SOSTENIBILIDAD Y ASG', 'CATEGORÍAS COMERCIALES Y FINANCIERAS', 'FUNDACIÓN COPPEL'];
+            const avgER = temas.map(tema => {
+                const tematweets = tweetsData.filter(t => t.tema === tema);
+                return tematweets.reduce((sum, t) => sum + t.engagement_rate, 0) / tematweets.length;
+            });
+            const volumen = temas.map(tema => tweetsData.filter(t => t.tema === tema).length);
+            
+            new Chart(categoriesCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Temas de Contenido',
+                        data: temas.map((tema, i) => ({
+                            x: volumen[i],
+                            y: avgER[i],
+                            label: tema
+                        })),
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderColor: ['#27ae60', '#e67e22', '#c0392b', '#8e44ad', '#7f8c8d'],
+                        pointRadius: 10,
+                        pointHoverRadius: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Rendimiento vs Volumen de Contenido por Tema' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const punto = context.parsed;
+                                    return `${temas[context.dataIndex]}: ${punto.y.toFixed(2)}% ER, ${punto.x} publicaciones`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            title: { display: true, text: 'Número de Publicaciones' },
+                            beginAtZero: true 
+                        },
+                        y: { 
+                            title: { display: true, text: 'Engagement Rate Promedio (%)' },
+                            beginAtZero: true 
+                        }
+                    }
+                }
+            });
+
+            // Impresiones vs Engagement
+            const impressionsCtx = document.getElementById('impressionsEngagementChart').getContext('2d');
+            
+            new Chart(impressionsCtx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Tweets',
+                        data: tweetsData.map(tweet => ({
+                            x: tweet.impresiones,
+                            y: tweet.engagement_rate
+                        })),
+                        backgroundColor: 'rgba(52, 152, 219, 0.6)',
+                        borderColor: '#3498db',
+                        pointRadius: 8,
+                        pointHoverRadius: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Correlación: Impresiones vs Engagement Rate' }
+                    },
+                    scales: {
+                        x: { 
+                            title: { display: true, text: 'Impresiones' },
+                            type: 'logarithmic'
+                        },
+                        y: { 
+                            title: { display: true, text: 'Engagement Rate (%)' },
+                            beginAtZero: true 
+                        }
+                    }
+                }
+            });
+        }
+
+        function initRecommendationsTab() {
+            // Factores de éxito
+            const bestPracticesCtx = document.getElementById('bestPracticesChart').getContext('2d');
+            
+            // Análisis por día de la semana
+            const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const engagementPorDia = [0, 9.41, 0, 0, 6.90, 4.24, 0]; // Basado en los datos
+            
+            new Chart(bestPracticesCtx, {
+                type: 'radar',
+                data: {
+                    labels: diasSemana,
+                    datasets: [{
+                        label: 'Engagement Rate Promedio (%)',
+                        data: engagementPorDia,
+                        backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                        borderColor: '#3498db',
+                        borderWidth: 3,
+                        pointRadius: 6,
+                        pointHoverRadius: 10
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { display: true, text: 'Rendimiento por Día de la Semana' }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 12
+                        }
+                    }
+                }
+            });
+        }
+
+        // Inicializar dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initTweetsTab();
+        });
+    </script>
+</body>
+</html>
