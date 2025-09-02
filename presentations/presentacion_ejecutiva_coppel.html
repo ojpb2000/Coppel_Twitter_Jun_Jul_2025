@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Ejecutiva - Análisis Twitter/X Coppel | Junio-Julio 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background: white;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 60px;
+            background: white;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        /* Estilo de portada */
+        .cover-slide {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover-slide h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .cover-slide h2 {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 200;
+            opacity: 0.9;
+        }
+        
+        .cover-slide .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 60px;
+            opacity: 0.8;
+        }
+        
+        .cover-slide .date {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 40px;
+        }
+        
+        .cover-logos {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-top: 40px;
+        }
+        
+        .logo-placeholder {
+            width: 120px;
+            height: 60px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .logo-svg {
+            width: 120px;
+            height: 60px;
+            filter: brightness(0) invert(1);
+        }
+        
+        /* Estilo de índice */
+        .index-slide {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        .index-slide h1 {
+            font-size: 3rem;
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .index-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .index-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+        
+        .index-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .index-item h3 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .index-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Estilo de contexto */
+        .context-slide {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        }
+        
+        .context-slide h1 {
+            font-size: 2.8rem;
+            color: #1e3c72;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .context-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .context-content p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        
+        .context-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Estilos generales mejorados */
+        .slide-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 4px solid #1e3c72;
+            position: relative;
+        }
+        
+        .slide-header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: #667eea;
+        }
+        
+        .slide-header h1 {
+            font-size: 2.8rem;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .slide-header h2 {
+            font-size: 1.8rem;
+            color: #667eea;
+            font-weight: 400;
+        }
+        
+        .slide-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            height: calc(100% - 180px);
+        }
+        
+        .text-content {
+            padding: 25px;
+        }
+        
+        .text-content h3 {
+            font-size: 1.6rem;
+            color: #1e3c72;
+            margin-bottom: 25px;
+        }
+        
+        .text-content p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 18px;
+            margin: 25px 0;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.25);
+        }
+        
+        .chart-container {
+            background: #f8f9fa;
+            border-radius: 18px;
+            padding: 25px;
+            height: 450px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid #e9ecef;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: #1e3c72;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+        }
+        
+        .nav-btn:hover {
+            background: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(30, 60, 114, 0.95);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            z-index: 1000;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .insight-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            margin: 25px 0;
+            box-shadow: 0 6px 20px rgba(240, 147, 251, 0.3);
+        }
+        
+        .metric-highlight {
+            background: linear-gradient(135deg, #26d0ce 0%, #1a2980 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            box-shadow: 0 6px 20px rgba(38, 208, 206, 0.3);
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .comparison-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .comparison-card h4 {
+            color: #1e3c72;
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+        }
+        
+        /* Logo de marca en esquinas */
+        .brand-logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 40px;
+            z-index: 999;
+        }
+        
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+        
+        /* Separadores de sección */
+        .section-divider {
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            margin: 30px 0;
+            border-radius: 2px;
+        }
+        
+        /* Mejoras responsive */
+        @media (max-width: 768px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .slide-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .slide-header h2 {
+                font-size: 1.5rem;
+            }
+            
+            .cover-slide h1 {
+                font-size: 2.5rem;
+            }
+            
+            .cover-slide h2 {
+                font-size: 1.5rem;
+            }
+            
+            .index-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo de marca en esquina -->
+    <div class="brand-logo">
+        <img src="coppel_logo.svg" alt="Coppel Logo">
+    </div>
+    
+    <div class="presentation-container">
+        <!-- SLIDE 1: Portada -->
+        <div class="slide active cover-slide" id="slide1">
+            <h1>📊 Análisis de Contenido Twitter/X</h1>
+            <h2>Coppel | Junio - Julio 2025</h2>
+            <div class="subtitle">Presentación Ejecutiva de Insights y Hallazgos Estratégicos</div>
+            <div class="date">Desarrollado por HOW2 Data Intelligence</div>
+            <div class="cover-logos">
+                <img src="coppel_logo.svg" alt="Coppel Logo" class="logo-svg">
+                <img src="how2_logo.svg" alt="HOW2 Logo" class="logo-svg">
+            </div>
+        </div>
+
+        <!-- SLIDE 2: Índice -->
+        <div class="slide index-slide" id="slide2">
+            <h1>📋 Índice de la Presentación</h1>
+            <div class="index-list">
+                <div class="index-item">
+                    <h3>🎯 Contexto y Objetivo</h3>
+                    <p>Descripción del análisis realizado y metodología aplicada para el estudio de contenido orgánico en redes sociales.</p>
+                </div>
+                <div class="index-item">
+                    <h3>📊 Métricas Clave</h3>
+                    <p>Resumen ejecutivo de los principales indicadores de rendimiento del período analizado.</p>
+                </div>
+                <div class="index-item">
+                    <h3>🎭 Junio vs Julio 2025</h3>
+                    <p>Análisis comparativo de estrategias de contenido y diferencias en engagement rate entre ambos meses.</p>
+                </div>
+                <div class="index-item">
+                    <h3>🏆 Top 3 Publicaciones</h3>
+                    <p>Análisis narrativo de las publicaciones con mayor rendimiento y fórmulas de éxito identificadas.</p>
+                </div>
+                <div class="index-item">
+                    <h3>🏗️ Pilares Estratégicos</h3>
+                    <p>Ranking de rendimiento por categorías organizacionales y análisis de engagement por pilares.</p>
+                </div>
+                <div class="index-item">
+                    <h3>🎯 Patrones y Recomendaciones</h3>
+                    <p>Insights sobre contenido que conecta vs. contenido que necesita evolución, y plan de acción estratégico.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: Contexto y Objetivo -->
+        <div class="slide context-slide" id="slide3">
+            <h1>🎯 Contexto y Objetivo del Análisis</h1>
+            <div class="context-content">
+                <p>Esta presentación resume los <strong>insights más valiosos</strong> del análisis de contenido orgánico de Coppel en Twitter/X durante junio-julio 2025, identificando patrones de éxito y oportunidades de optimización.</p>
+                
+                <div class="context-highlight">
+                    <h3>📈 Métricas Clave del Período</h3>
+                    <p><strong>4.47M impresiones</strong> | <strong>1,405 interacciones</strong> | <strong>4.21% ER promedio</strong></p>
+                </div>
+                
+                <p>El análisis de <strong>16 publicaciones orgánicas</strong> revela patrones interesantes con oportunidades de optimización significativas para la estrategia de contenido de la marca.</p>
+                
+                <p>Nuestro objetivo es proporcionar insights accionables que permitan optimizar el engagement rate y conectar mejor con la audiencia objetivo.</p>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: Métricas Clave -->
+        <div class="slide" id="slide4">
+            <div class="slide-header">
+                <h1>📊 Métricas Clave del Período</h1>
+                <h2>Resumen Ejecutivo de Rendimiento</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <h3>📊 Resumen Ejecutivo de Métricas</h3>
+                    <p>Durante el período de análisis, Coppel publicó <strong>16 tweets orgánicos</strong> que generaron un total de <strong>4.47 millones de impresiones</strong> y <strong>1,405 interacciones</strong>.</p>
+                    
+                    <div class="highlight-box">
+                        <h4>📈 Métricas Clave del Período</h4>
+                        <p><strong>4.47M impresiones</strong> | <strong>1,405 interacciones</strong> | <strong>4.21% ER promedio</strong></p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🔍 Hallazgo Principal</h4>
+                        <p>La diferencia de <strong>5 puntos porcentuales</strong> en engagement rate entre junio (7.60%) y julio (1.59%) revela patrones claros sobre qué tipo de contenido conecta naturalmente con la audiencia.</p>
+                    </div>
+                    
+                    <div class="section-divider"></div>
+                    
+                    <p><strong>Objetivo:</strong> Identificar patrones de éxito y oportunidades de optimización para mejorar el engagement rate en futuras campañas.</p>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="overviewChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: Junio vs Julio - El Viaje del Contenido -->
+        <div class="slide" id="slide5">
+            <div class="slide-header">
+                <h1>🎭 Junio vs Julio 2025</h1>
+                <h2>El Viaje del Contenido - Dos Meses, Dos Estrategias</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>🎭 Junio - El Mes de la Revelación</h4>
+                            <p><strong>7.60% ER promedio</strong></p>
+                            <p>• Conferencia de prensa nueva identidad visual</p>
+                            <p>• Presencia de @Milenio, @heraldodemexico, El País</p>
+                            <p>• Eventos reales y transparencia corporativa</p>
+                            <p>• Contenido "detrás de cámaras"</p>
+                        </div>
+                        
+                        <div class="comparison-card">
+                            <h4>🎯 Julio - El Mes de los Anuncios</h4>
+                            <p><strong>1.59% ER promedio</strong></p>
+                            <p>• Contenido institucional y anuncios estratégicos</p>
+                            <p>• Pico de interacciones (458) con Diego Coppel</p>
+                            <p>• Enfoque en personas y cambios de liderazgo</p>
+                            <p>• Anuncios corporativos tradicionales</p>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <h4>📊 Diferencia Crítica: 5.01 puntos porcentuales</h4>
+                        <p>El contenido basado en eventos reales y transparencia genera mayor engagement natural que los anuncios corporativos tradicionales.</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="monthlyComparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: Top 3 Publicaciones - Análisis de Éxito -->
+        <div class="slide" id="slide6">
+            <div class="slide-header">
+                <h1>🏆 Top 3 Publicaciones</h1>
+                <h2>Análisis Narrativo de Éxito - Fórmulas que Funcionan</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="insight-card">
+                        <h4>🥇 1. Inversión $80 mmdp (15.11% ER)</h4>
+                        <p><strong>Fórmula:</strong> Dato financiero + Plan estratégico + Impacto humano</p>
+                        <p><strong>Lección:</strong> Los anuncios financieros funcionan cuando se humanizan con propósito social</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🥈 2. Nueva estructura directiva (14.25% ER)</h4>
+                        <p><strong>Fórmula:</strong> Cambio organizacional + Explicación del propósito + Visión de futuro</p>
+                        <p><strong>Lección:</strong> Los cambios de liderazgo funcionan cuando se explican como evolución</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🥉 3. Evolución identidad visual (13.8% ER)</h4>
+                        <p><strong>Fórmula:</strong> Cambio corporativo + Explicación emocional + Call to action</p>
+                        <p><strong>Lección:</strong> Los cambios de marca conectan cuando mantienen valores emocionales</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="top3Chart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Pilares Estratégicos - Dónde Está el Engagement -->
+        <div class="slide" id="slide7">
+            <div class="slide-header">
+                <h1>🏗️ Pilares Estratégicos</h1>
+                <h2>Análisis de Rendimiento por Categoría Organizacional</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="highlight-box">
+                        <h4>🏆 Ranking de Pilares por Engagement Rate</h4>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>🥇 MARCA EMPLEADORA</h4>
+                            <p><strong>7.36% ER promedio</strong></p>
+                            <p>• Evolución de identidad visual</p>
+                            <p>• Nuevos liderazgos</p>
+                            <p>• Propósito organizacional</p>
+                            <p>• Lado humano de la marca</p>
+                        </div>
+                        
+                        <div class="comparison-card">
+                            <h4>🥈 OMNICANALIDAD</h4>
+                            <p><strong>3.13% ER promedio</strong></p>
+                            <p>• Inversiones estratégicas</p>
+                            <p>• Transformación digital</p>
+                            <p>• Planes de expansión</p>
+                            <p>• Requiere humanización</p>
+                        </div>
+                        
+                        <div class="comparison-card">
+                            <h4>🥉 COMUNIDAD</h4>
+                            <p><strong>2.27% ER promedio</strong></p>
+                            <p>• Arte mexicano y FONART</p>
+                            <p>• Sostenibilidad y ASG</p>
+                            <p>• Agradecimientos públicos</p>
+                            <p>• Oportunidad de storytelling</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="pilaresChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: Temas que Resonan - Análisis de Contenido -->
+        <div class="slide" id="slide8">
+            <div class="slide-header">
+                <h1>🎭 Temas que Resonan</h1>
+                <h2>Análisis de Contenido por Categoría Temática</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="metric-highlight">
+                        <h4>📊 Top 3 Temas por Engagement Rate</h4>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🥇 DESARROLLO PROFESIONAL (14.25% ER)</h4>
+                        <p><strong>Contenido:</strong> Liderazgo, evolución organizacional, visión de futuro</p>
+                        <p><strong>Factor de éxito:</strong> Cambios de estructura que se explican como evolución natural</p>
+                        <p><strong>Ejemplo:</strong> Nombramiento de Diego Coppel como Director General</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🥈 PROPUESTA DE VALOR (8.60% ER)</h4>
+                        <p><strong>Contenido:</strong> Cambios de marca, agradecimientos, transparencia</p>
+                        <p><strong>Factor de éxito:</strong> Mostrar el "detrás de cámaras" de procesos</p>
+                        <p><strong>Ejemplo:</strong> Evolución de identidad visual con #TúEresLaLlave</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🥉 SOSTENIBILIDAD Y ASG (3.92% ER)</h4>
+                        <p><strong>Contenido:</strong> Iniciativas sociales, reuniones con stakeholders</p>
+                        <p><strong>Factor de éxito:</strong> Eventos reales con agradecimientos públicos</p>
+                        <p><strong>Ejemplo:</strong> Reunión con medios y líderes creativos</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="temasChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: Patrones de Contenido - Lo que Funciona vs. Lo que No -->
+        <div class="slide" id="slide9">
+            <div class="slide-header">
+                <h1>🎯 Patrones de Contenido</h1>
+                <h2>Lo que Funciona vs. Lo que Necesita Evolución</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>✅ Contenido que Conecta</h4>
+                            <p><strong>Eventos Reales:</strong> Conferencias de prensa, reuniones con medios</p>
+                            <p><strong>Transparencia:</strong> Agradecimientos públicos, "detrás de cámaras"</p>
+                            <p><strong>Propósito Social:</strong> Inversiones con impacto humano</p>
+                            <p><strong>Liderazgo Humanizado:</strong> Cambios explicados como evolución</p>
+                        </div>
+                        
+                        <div class="comparison-card">
+                            <h4>❌ Contenido que Necesita Evolución</h4>
+                            <p><strong>Anuncios Corporativos:</strong> Reconocimientos sin beneficios para clientes</p>
+                            <p><strong>Iniciativas Sociales:</strong> Programas sin storytelling personal</p>
+                            <p><strong>Servicios Financieros:</strong> Ofertas sin casos de éxito</p>
+                            <p><strong>Repetición:</strong> Mismo mensaje con diferentes enfoques</p>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4>🔑 Insight Clave</h4>
+                        <p>El contenido que conecta emocionalmente con la audiencia combina <strong>información estratégica</strong> con <strong>propósito humano</strong> y <strong>transparencia en procesos</strong>.</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="patternsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: Insights Narrativos - Cómo Conectar con la Audiencia -->
+        <div class="slide" id="slide10">
+            <div class="slide-header">
+                <h1>🧠 Insights Narrativos</h1>
+                <h2>Cómo el Contenido Conecta con la Audiencia</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="insight-card">
+                        <h4>🎭 La Narrativa de Transformación</h4>
+                        <p>La audiencia responde positivamente cuando Coppel explica el "porqué" detrás de decisiones estratégicas, conectándolas con beneficios humanos.</p>
+                        <p><strong>Ejemplo:</strong> $80 mmdp + transformación + "mejorar la vida de las personas"</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>👥 Liderazgo Humanizado</h4>
+                        <p>Los anuncios sobre estructura directiva funcionan cuando se presentan como evolución natural y continuidad, no solo como cambios administrativos.</p>
+                        <p><strong>Ejemplo:</strong> Diego Coppel + evolución + gobernanza profesional</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>💝 Propósito sobre Producto</h4>
+                        <p>El contenido que enfatiza valores sociales y propósito empresarial genera más engagement que las descripciones directas de productos o servicios.</p>
+                        <p><strong>Ejemplo:</strong> Iniciativas de Fundación Coppel con storytelling personal</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🔓 Transparencia Corporativa</h4>
+                        <p>Los agradecimientos públicos, reuniones con medios y apertura sobre procesos internos construyen credibilidad y cercanía.</p>
+                        <p><strong>Ejemplo:</strong> Conferencia de prensa con agradecimientos a medios</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="narrativeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: Recomendaciones Estratégicas - Plan de Acción -->
+        <div class="slide" id="slide11">
+            <div class="slide-header">
+                <h1>💡 Recomendaciones Estratégicas</h1>
+                <h2>Plan de Acción Basado en Insights de Contenido</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="highlight-box">
+                        <h4>🎯 Plan de Evolución en 3 Fases</h4>
+                    </div>
+                    
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4>📅 Mes 1: Amplificar Éxitos</h4>
+                            <p>• Fórmula "Liderazgo + Propósito"</p>
+                            <p>• Fórmula "Inversión + Impacto Social"</p>
+                            <p>• Contenido de transparencia corporativa</p>
+                            <p>• Eventos reales y "detrás de cámaras"</p>
+                        </div>
+                        
+                        <div class="comparison-card">
+                            <h4>📅 Mes 2: Humanizar Contenido</h4>
+                            <p>• Storytelling personal para iniciativas sociales</p>
+                            <p>• Casos de éxito reales para servicios</p>
+                            <p>• Beneficiarios específicos de programas</p>
+                            <p>• Impacto tangible en comunidades</p>
+                        </div>
+                        
+                        <div class="comparison-card">
+                            <h4>📅 Mes 3: Optimización Continua</h4>
+                            <p>• Sistema de medición y seguimiento</p>
+                            <p>• Optimización basada en engagement temático</p>
+                            <p>• Balance de contenido por categorías</p>
+                            <p>• Calendario editorial optimizado</p>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <h4>🎯 Meta de Engagement Rate: >8% promedio mensual</h4>
+                        <p>Basado en el rendimiento comprobado de las mejores categorías y fórmulas identificadas.</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="recommendationsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: Resumen Ejecutivo - Conclusiones Clave -->
+        <div class="slide" id="slide12">
+            <div class="slide-header">
+                <h1>📋 Resumen Ejecutivo</h1>
+                <h2>Conclusiones Clave y Próximos Pasos</h2>
+            </div>
+            
+            <div class="slide-content">
+                <div class="text-content">
+                    <div class="highlight-box">
+                        <h4>🔍 Hallazgos Principales</h4>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>📊 Diferencia Crítica Junio vs Julio</h4>
+                        <p>El contenido basado en <strong>eventos reales y transparencia</strong> genera 5x más engagement que los anuncios corporativos tradicionales.</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🏆 Fórmulas de Éxito Identificadas</h4>
+                        <p>• <strong>Liderazgo + Visión de Futuro</strong> (14.25% ER)</p>
+                        <p>• <strong>Inversión + Propósito Social</strong> (15.11% ER)</p>
+                        <p>• <strong>Cambio de Marca + Valores</strong> (13.8% ER)</p>
+                    </div>
+                    
+                    <div class="insight-card">
+                        <h4>🎯 Oportunidades de Optimización</h4>
+                        <p>• Humanizar contenido institucional con storytelling personal</p>
+                        <p>• Conectar iniciativas sociales con beneficiarios específicos</p>
+                        <p>• Balancear contenido comercial con propósito humano</p>
+                        <p>• Aprovechar timing estratégico (lunes y jueves)</p>
+                    </div>
+                    
+                    <div class="metric-highlight">
+                        <h4>🚀 Próximo Paso: Implementar Plan de Evolución</h4>
+                        <p>Comenzar con la amplificación de fórmulas exitosas identificadas en el análisis.</p>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <canvas id="summaryChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="previousSlide()">← Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="nextSlide()">Siguiente →</button>
+    </div>
+    
+    <!-- Contador de slides -->
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const totalSlides = 12;
+        
+        // Datos para los gráficos
+        const tweetsData = [
+            { tema: 'DESARROLLO PROFESIONAL', er: 14.25, color: '#2ecc71' },
+            { tema: 'PROPUESTA DE VALOR', er: 8.60, color: '#f39c12' },
+            { tema: 'SOSTENIBILIDAD Y ASG', er: 3.92, color: '#e74c3c' },
+            { tema: 'CATEGORÍAS COMERCIALES', er: 3.07, color: '#9b59b6' },
+            { tema: 'FUNDACIÓN COPPEL', er: 0.0, color: '#95a5a6' }
+        ];
+        
+        const pilaresData = [
+            { pilar: 'MARCA EMPLEADORA', er: 7.36, color: '#3498db' },
+            { pilar: 'OMNICANALIDAD', er: 3.13, color: '#e67e22' },
+            { pilar: 'COMUNIDAD', er: 2.27, color: '#1abc9c' }
+        ];
+        
+        // Funciones de navegación
+        function showSlide(index) {
+            // Ocultar todas las slides
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            
+            // Mostrar slide actual
+            document.getElementById(`slide${index + 1}`).classList.add('active');
+            
+            // Actualizar contador
+            document.getElementById('currentSlide').textContent = index + 1;
+            
+            // Actualizar botones de navegación
+            document.getElementById('prevBtn').disabled = index === 0;
+            document.getElementById('nextBtn').disabled = index === totalSlides - 1;
+            
+            // Inicializar gráficos si es necesario
+            setTimeout(() => {
+                initializeCharts();
+            }, 100);
+        }
+        
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                showSlide(currentSlideIndex);
+            }
+        }
+        
+        function previousSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                showSlide(currentSlideIndex);
+            }
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+        
+        // Inicializar gráficos
+        function initializeCharts() {
+            // Gráfico de overview
+            const overviewCtx = document.getElementById('overviewChart');
+            if (overviewCtx && !overviewCtx.chart) {
+                overviewCtx.chart = new Chart(overviewCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Impresiones', 'Interacciones', 'ER Promedio'],
+                        datasets: [{
+                            data: [4.47, 1.405, 4.21],
+                            backgroundColor: ['#3498db', '#e74c3c', '#2ecc71'],
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Métricas Clave del Período' }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de comparación mensual
+            const monthlyCtx = document.getElementById('monthlyComparisonChart');
+            if (monthlyCtx && !monthlyCtx.chart) {
+                monthlyCtx.chart = new Chart(monthlyCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Junio 2025', 'Julio 2025'],
+                        datasets: [{
+                            label: 'Engagement Rate (%)',
+                            data: [7.60, 1.59],
+                            backgroundColor: ['#2ecc71', '#e74c3c'],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Comparación Mensual - ER Promedio' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 10 }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico Top 3
+            const top3Ctx = document.getElementById('top3Chart');
+            if (top3Ctx && !top3Ctx.chart) {
+                top3Ctx.chart = new Chart(top3Ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Inversión $80mmdp', 'Estructura Directiva', 'Identidad Visual'],
+                        datasets: [{
+                            label: 'Engagement Rate (%)',
+                            data: [15.11, 14.25, 13.8],
+                            backgroundColor: ['#f39c12', '#3498db', '#e74c3c'],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Top 3 Publicaciones por ER' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 16 }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Pilares
+            const pilaresCtx = document.getElementById('pilaresChart');
+            if (pilaresCtx && !pilaresCtx.chart) {
+                pilaresCtx.chart = new Chart(pilaresCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: pilaresData.map(p => p.pilar),
+                        datasets: [{
+                            data: pilaresData.map(p => p.er),
+                            backgroundColor: pilaresData.map(p => p.color),
+                            borderWidth: 3,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'ER Promedio por Pilar Estratégico' }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Temas
+            const temasCtx = document.getElementById('temasChart');
+            if (temasCtx && !temasCtx.chart) {
+                temasCtx.chart = new Chart(temasCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: tweetsData.map(t => t.tema),
+                        datasets: [{
+                            label: 'Engagement Rate (%)',
+                            data: tweetsData.map(t => t.er),
+                            backgroundColor: tweetsData.map(t => t.color),
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'ER por Tema de Contenido' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 16 }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Patrones
+            const patternsCtx = document.getElementById('patternsChart');
+            if (patternsCtx && !patternsCtx.chart) {
+                patternsCtx.chart = new Chart(patternsCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Eventos Reales', 'Transparencia', 'Propósito Social', 'Liderazgo Humanizado', 'Anuncios Corporativos', 'Iniciativas Sociales'],
+                        datasets: [{
+                            label: 'Efectividad',
+                            data: [9, 8, 7, 8, 3, 4],
+                            backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                            borderColor: '#3498db',
+                            borderWidth: 3,
+                            pointRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Efectividad por Tipo de Contenido' }
+                        },
+                        scales: {
+                            r: { beginAtZero: true, max: 10 }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico Narrativo
+            const narrativeCtx = document.getElementById('narrativeChart');
+            if (narrativeCtx && !narrativeCtx.chart) {
+                narrativeCtx.chart = new Chart(narrativeCtx, {
+                    type: 'polarArea',
+                    data: {
+                        labels: ['Transformación', 'Liderazgo', 'Propósito', 'Transparencia'],
+                        datasets: [{
+                            data: [15.11, 14.25, 8.60, 10.7],
+                            backgroundColor: ['rgba(52, 152, 219, 0.6)', 'rgba(46, 204, 113, 0.6)', 'rgba(243, 156, 18, 0.6)', 'rgba(231, 76, 60, 0.6)'],
+                            borderColor: ['#3498db', '#2ecc71', '#f39c12', '#e74c3c'],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Efectividad por Tipo de Narrativa' }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Recomendaciones
+            const recommendationsCtx = document.getElementById('recommendationsChart');
+            if (recommendationsCtx && !recommendationsCtx.chart) {
+                recommendationsCtx.chart = new Chart(recommendationsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Mes 1', 'Mes 2', 'Meta'],
+                        datasets: [{
+                            label: 'ER Objetivo (%)',
+                            data: [6.5, 7.5, 8.0],
+                            backgroundColor: ['#3498db', '#2ecc71', '#f39c12'],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Plan de Evolución - Objetivos por Mes' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 10 }
+                        }
+                    }
+                });
+            }
+            
+            // Gráfico de Resumen
+            const summaryCtx = document.getElementById('summaryChart');
+            if (summaryCtx && !summaryCtx.chart) {
+                summaryCtx.chart = new Chart(summaryCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Junio', 'Julio', 'Meta Mes 1', 'Meta Mes 2', 'Meta Mes 3'],
+                        datasets: [{
+                            label: 'Engagement Rate (%)',
+                            data: [7.60, 1.59, 6.5, 7.5, 8.0],
+                            borderColor: '#e74c3c',
+                            backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                            borderWidth: 4,
+                            pointRadius: 8,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: { display: true, text: 'Trayectoria de Mejora - ER Promedio' }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, max: 10 }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Inicializar presentación
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlide(0);
+            document.getElementById('totalSlides').textContent = totalSlides;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Ejecutivo Twitter/X - Coppel | Junio-Julio 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            display: flex;
+            height: 100vh;
+        }
+        
+        .slides-container {
+            flex: 1;
+            position: relative;
+            background: white;
+            box-shadow: 0 0 50px rgba(0,0,0,0.3);
+        }
+        
+        .slide {
+            display: none !important;
+            padding: 60px;
+            height: 100vh;
+            overflow-y: auto;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            position: relative;
+        }
+        
+        .slide.active {
+            display: block !important;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .slide h1 {
+            color: #1e3c72;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 300;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 20px;
+        }
+        
+        .slide h2 {
+            color: #2a5298;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 400;
+        }
+        
+        .slide h3 {
+            color: #1e3c72;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .metric-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .metric-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .metric-box .number {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .metric-box .label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .chart-slide {
+            height: 500px;
+            margin: 30px 0;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            padding: 12px 20px;
+            background: rgba(30, 60, 114, 0.9);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-btn:hover {
+            background: rgba(30, 60, 114, 1);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(30, 60, 114, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+        
+        .key-insights {
+            background: linear-gradient(135deg, #26d0ce 0%, #1a2980 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: #721c24;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .success-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: #155724;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid #28a745;
+        }
+        
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .bullet-points li {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .bullet-points li:before {
+            content: "▶";
+            color: #667eea;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 30px 0;
+        }
+        
+        .highlight-number {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .slide-title-bg {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 80px 60px;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .slide-title-bg h1 {
+            font-size: 4rem;
+            margin-bottom: 30px;
+            color: white;
+            border: none;
+            padding: 0;
+        }
+        
+        .slide-title-bg p {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin: 20px 0;
+        }
+        
+        .logo-placeholder {
+            width: 150px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            margin: 30px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .slide { padding: 30px 20px; }
+            .slide h1 { font-size: 2.5rem; }
+            .slide h2 { font-size: 1.8rem; }
+            .metrics-grid { grid-template-columns: 1fr 1fr; }
+            .two-column { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slides-container">
+            <!-- SLIDE 1: TÍTULO -->
+            <div class="slide active slide-title-bg">
+                <div class="logo-placeholder">COPPEL</div>
+                <h1>📊 Reporte Twitter/X</h1>
+                <p>Análisis Estratégico de Rendimiento</p>
+                <p><strong>Junio - Julio 2025</strong></p>
+                <p style="font-size: 1.2rem; margin-top: 40px;">16 Publicaciones Analizadas | 4.47M Impresiones</p>
+            </div>
+            
+            <!-- SLIDE 2: RESUMEN EJECUTIVO -->
+            <div class="slide">
+                <h1>🎯 Resumen Ejecutivo</h1>
+                
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <span class="number">4.21%</span>
+                        <span class="label">Engagement Rate Promedio</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="number">4.47M</span>
+                        <span class="label">Impresiones Totales</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="number">1,405</span>
+                        <span class="label">Interacciones Totales</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="number">16</span>
+                        <span class="label">Publicaciones</span>
+                    </div>
+                </div>
+                
+                <div class="key-insights">
+                    <h3>💡 Insights Principales</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Desarrollo Profesional</strong> lidera con <span class="highlight-number">14.25% ER</span></li>
+                        <li><strong>Marca Empleadora</strong> es el pilar más efectivo (<span class="highlight-number">7.36% ER</span>)</li>
+                        <li><strong>Variación mensual</strong> presenta oportunidades de optimización</li>
+                        <li><strong>Contenido de liderazgo</strong> genera mayor conexión con audiencia</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SLIDE 3: RENDIMIENTO POR CATEGORÍAS -->
+            <div class="slide">
+                <h1>📈 Rendimiento por Categorías</h1>
+                
+                <div class="chart-slide">
+                    <canvas id="slideTemasChart" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="two-column">
+                    <div class="success-box">
+                        <h3>✅ Categorías Exitosas</h3>
+                        <ul class="bullet-points">
+                            <li><strong>Desarrollo Profesional:</strong> 14.25% ER</li>
+                            <li><strong>Propuesta de Valor:</strong> 5.06% ER</li>
+                            <li><strong>Sostenibilidad y ASG:</strong> 3.92% ER</li>
+                        </ul>
+                    </div>
+                    <div class="warning-box">
+                        <h3>📊 Oportunidades de Mejora</h3>
+                        <ul class="bullet-points">
+                            <li><strong>Fundación Coppel:</strong> Reformular approach</li>
+                            <li><strong>Contenido Comercial:</strong> Integrar storytelling</li>
+                            <li><strong>Balance temático:</strong> Potenciar categorías exitosas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SLIDE 4: COMPARACIÓN MENSUAL -->
+            <div class="slide">
+                <h1>📅 Comparación Mensual</h1>
+                
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <span class="number">7.60%</span>
+                        <span class="label">Engagement Rate - Junio</span>
+                    </div>
+                    <div class="metric-box">
+                        <span class="number">1.59%</span>
+                        <span class="label">Engagement Rate - Julio</span>
+                    </div>
+                </div>
+                
+                <div class="chart-slide">
+                    <canvas id="slideMonthlyChart" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="key-insights">
+                    <h3>📊 Análisis Temporal</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Junio:</strong> Mayor engagement con menor alcance (estrategia orgánica efectiva)</li>
+                        <li><strong>Julio:</strong> Amplio alcance con menor participación (oportunidad de optimización)</li>
+                        <li><strong>Aprendizaje:</strong> Balance entre promoción pagada y relevancia de contenido</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SLIDE 5: PILARES ESTRATÉGICOS -->
+            <div class="slide">
+                <h1>🏗️ Pilares Estratégicos</h1>
+                
+                <div class="chart-slide">
+                    <canvas id="slidePilaresChart" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>🎯 Marca Empleadora (7.36% ER)</h3>
+                        <ul class="bullet-points">
+                            <li>Contenido interno más efectivo</li>
+                            <li>Historias de liderazgo conectan</li>
+                            <li>Cultura organizacional valorada</li>
+                        </ul>
+                        
+                        <h3>🏘️ Comunidad (3.27% ER)</h3>
+                        <ul class="bullet-points">
+                            <li>Impacto social consistente</li>
+                            <li>Potencial para testimonios</li>
+                            <li>Conexión emocional moderada</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>🌐 Omnicanalidad (3.07% ER)</h3>
+                        <ul class="bullet-points">
+                            <li>Contenido comercial tradicional</li>
+                            <li>Oportunidad de storytelling</li>
+                            <li>Integración value-driven</li>
+                        </ul>
+                        
+                        <div class="success-box">
+                            <strong>Recomendación:</strong> Amplificar "Marca Empleadora" aplicando elementos exitosos a otros pilares
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SLIDE 6: TOP PERFORMERS -->
+            <div class="slide">
+                <h1>🏆 Mejores Publicaciones</h1>
+                
+                <div class="chart-slide">
+                    <canvas id="slideTopChart" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="success-box">
+                    <h3>🥇 Top 3 Publicaciones</h3>
+                    <ul class="bullet-points">
+                        <li><strong>15.11% ER:</strong> Anuncio inversión $80 mmdp transformación (13/06)</li>
+                        <li><strong>14.25% ER:</strong> Nueva estructura liderazgo Diego Coppel (14/07)</li>
+                        <li><strong>13.8% ER:</strong> Evolución identidad visual #TúEresLaLlave (12/06)</li>
+                    </ul>
+                </div>
+                
+                <div class="key-insights">
+                    <h3>🔍 Elementos de Éxito Identificados</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Anuncios estratégicos</strong> con impacto futuro</li>
+                        <li><strong>Cambios de liderazgo</strong> generan interés genuino</li>
+                        <li><strong>Evolución de marca</strong> con propósito claro</li>
+                        <li><strong>Hashtags corporativos</strong> (#TúEresLaLlave) efectivos</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SLIDE 7: DISTRIBUCIÓN DE ALCANCE -->
+            <div class="slide">
+                <h1>📊 Distribución de Alcance e Interacciones</h1>
+                
+                <div class="two-column">
+                    <div class="chart-slide" style="height: 400px;">
+                        <canvas id="slideImpressionsChart" width="400" height="300"></canvas>
+                    </div>
+                    <div class="chart-slide" style="height: 400px;">
+                        <canvas id="slideEngagementChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+                
+                <div class="key-insights">
+                    <h3>📈 Insights de Distribución</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Categorías Comerciales:</strong> Mayor alcance (71.8%) pero menor engagement relativo</li>
+                        <li><strong>Desarrollo Profesional:</strong> Menor alcance (0.1%) pero máximo engagement (32.6%)</li>
+                        <li><strong>Oportunidad:</strong> Aplicar elementos de DP a contenido comercial</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SLIDE 8: ANÁLISIS TEMPORAL -->
+            <div class="slide">
+                <h1>⏰ Patrones Temporales</h1>
+                
+                <div class="chart-slide">
+                    <canvas id="slideTemporalChart" width="800" height="400"></canvas>
+                </div>
+                
+                <div class="two-column">
+                    <div class="success-box">
+                        <h3>🗓️ Mejores Días</h3>
+                        <ul class="bullet-points">
+                            <li><strong>Lunes:</strong> 9.41% ER promedio</li>
+                            <li><strong>Jueves:</strong> 6.90% ER promedio</li>
+                            <li><strong>Viernes:</strong> 4.24% ER promedio</li>
+                        </ul>
+                    </div>
+                    <div class="key-insights">
+                        <h3>🎯 Calendario Optimizado</h3>
+                        <ul class="bullet-points">
+                            <li><strong>Lunes:</strong> Anuncios estratégicos</li>
+                            <li><strong>Jueves:</strong> Marca empleadora</li>
+                            <li><strong>Viernes:</strong> Impacto social</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SLIDE 9: RECOMENDACIONES ESTRATÉGICAS -->
+            <div class="slide">
+                <h1>💡 Recomendaciones Estratégicas</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <div class="success-box">
+                            <h3>🚀 Acciones de Potenciación</h3>
+                            <ul class="bullet-points">
+                                <li>Incrementar contenido "Desarrollo Profesional"</li>
+                                <li>Replicar elementos exitosos de junio</li>
+                                <li>Optimizar balance alcance-engagement</li>
+                                <li>Humanizar contenido comercial</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="key-insights">
+                            <h3>📊 KPIs Sugeridos</h3>
+                            <ul class="bullet-points">
+                                <li><strong>ER Objetivo:</strong> >8% mensual</li>
+                                <li><strong>Consistencia:</strong> CV <80%</li>
+                                <li><strong>Balance:</strong> Max 30% un tema</li>
+                                <li><strong>Eficiencia:</strong> >0.1% ER/1K imp</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <h3>🎯 Plan de Evolución 90 Días</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Mes 1:</strong> Escalar contenido exitoso (Desarrollo Profesional)</li>
+                        <li><strong>Mes 2:</strong> A/B testing en categorías con potencial</li>
+                        <li><strong>Mes 3:</strong> Sistema de monitoreo y optimización continua</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SLIDE 10: CONCLUSIONES -->
+            <div class="slide">
+                <h1>🎯 Conclusiones y Próximos Pasos</h1>
+                
+                <div class="key-insights">
+                    <h3>✅ Fortalezas Identificadas</h3>
+                    <ul class="bullet-points">
+                        <li>Capacidad comprobada para generar alto engagement (>14% ER)</li>
+                        <li>Contenido de liderazgo conecta efectivamente con audiencia</li>
+                        <li>Marca empleadora genera engagement auténtico</li>
+                        <li>Alcance significativo con 4.47M impresiones</li>
+                    </ul>
+                </div>
+                
+                <div class="success-box">
+                    <h3>🚀 Oportunidades de Crecimiento</h3>
+                    <ul class="bullet-points">
+                        <li><strong>Escalamiento:</strong> Incrementar contenido de mayor ROI</li>
+                        <li><strong>Optimización:</strong> Mejorar balance alcance-participación</li>
+                        <li><strong>Innovación:</strong> Aplicar storytelling a contenido comercial</li>
+                        <li><strong>Sistematización:</strong> Estandarizar mejores prácticas</li>
+                    </ul>
+                </div>
+                
+                <div class="warning-box">
+                    <h3>📈 Proyección de Impacto</h3>
+                    <p><strong>Implementando las recomendaciones:</strong></p>
+                    <ul class="bullet-points">
+                        <li>Incremento proyectado ER: <span class="highlight-number">40-60%</span></li>
+                        <li>Mayor consistencia: <span class="highlight-number">CV <80%</span></li>
+                        <li>ROI optimizado en promoción pagada</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- NAVEGACIÓN -->
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">10</span>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">◀ Anterior</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Siguiente ▶</button>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let chartsInitialized = {};
+        
+        // Datos para gráficos
+        const tweetsData = [
+            {
+                date: "12/06/2025",
+                impresiones: 2072,
+                interacciones: 286,
+                engagement_rate: 13.8,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "PROPUESTA DE VALOR"
+            },
+            {
+                date: "13/06/2025",
+                impresiones: 1377,
+                interacciones: 208,
+                engagement_rate: 15.11,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "16/06/2025",
+                impresiones: 1383,
+                interacciones: 148,
+                engagement_rate: 10.7,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "17/06/2025",
+                impresiones: 1087,
+                interacciones: 15,
+                engagement_rate: 1.38,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "PROPUESTA DE VALOR"
+            },
+            {
+                date: "18/06/2025",
+                impresiones: 1489,
+                interacciones: 42,
+                engagement_rate: 2.82,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "23/06/2025",
+                impresiones: 1003,
+                interacciones: 33,
+                engagement_rate: 3.29,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "27/06/2025",
+                impresiones: 1021,
+                interacciones: 62,
+                engagement_rate: 6.07,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "03/07/2025",
+                impresiones: 771000,
+                interacciones: 40,
+                engagement_rate: 0.01,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "04/07/2025",
+                impresiones: 962000,
+                interacciones: 49,
+                engagement_rate: 0.01,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "08/07/2025",
+                impresiones: 662000,
+                interacciones: 23,
+                engagement_rate: 0.0,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "14/07/2025",
+                impresiones: 3215,
+                interacciones: 458,
+                engagement_rate: 14.25,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "DESARROLLO PROFESIONAL"
+            },
+            {
+                date: "16/07/2025",
+                impresiones: 625000,
+                interacciones: 8,
+                engagement_rate: 0.0,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            },
+            {
+                date: "18/07/2025",
+                impresiones: 499000,
+                interacciones: 8,
+                engagement_rate: 0.0,
+                vinculo: "IMPULSAR AL TALENTO",
+                pilar: "MARCA EMPLEADORA",
+                tema: "PROPUESTA DE VALOR"
+            },
+            {
+                date: "23/07/2025",
+                impresiones: 632000,
+                interacciones: 13,
+                engagement_rate: 0.0,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "SOSTENIBILIDAD Y ASG"
+            },
+            {
+                date: "25/07/2025",
+                impresiones: 224000,
+                interacciones: 8,
+                engagement_rate: 0.0,
+                vinculo: "CONTRIBUIR Y REDUCIR RIESGOS",
+                pilar: "COMUNIDAD",
+                tema: "FUNDACIÓN COPPEL"
+            },
+            {
+                date: "30/07/2025",
+                impresiones: 88000,
+                interacciones: 4,
+                engagement_rate: 0.0,
+                vinculo: "VISIBILIZAR OFERTA DE VALOR",
+                pilar: "OMNICANALIDAD",
+                tema: "CATEGORÍAS COMERCIALES Y FINANCIERAS"
+            }
+        ];
+
+        // Funciones de navegación
+        function changeSlide(direction) {
+            // Remover active de todos los slides
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            currentSlideIndex += direction;
+            
+            if (currentSlideIndex < 0) currentSlideIndex = 0;
+            if (currentSlideIndex >= totalSlides) currentSlideIndex = totalSlides - 1;
+            
+            // Agregar active al slide actual
+            slides[currentSlideIndex].classList.add('active');
+            updateNavigation();
+            
+            // Inicializar gráficos del slide actual
+            setTimeout(() => {
+                initCurrentSlideCharts();
+            }, 200);
+        }
+        
+        function updateNavigation() {
+            document.getElementById('currentSlide').textContent = currentSlideIndex + 1;
+            document.getElementById('totalSlides').textContent = totalSlides;
+            
+            document.getElementById('prevBtn').disabled = currentSlideIndex === 0;
+            document.getElementById('nextBtn').disabled = currentSlideIndex === totalSlides - 1;
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' && currentSlideIndex < totalSlides - 1) {
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft' && currentSlideIndex > 0) {
+                changeSlide(-1);
+            }
+        });
+        
+        // Inicializar gráficos según slide actual
+        function initCurrentSlideCharts() {
+            const slideId = `slide${currentSlideIndex + 1}`;
+            if (chartsInitialized[slideId]) return;
+            
+            try {
+                switch(currentSlideIndex) {
+                    case 2: initSlide3Charts(); break;
+                    case 3: initSlide4Charts(); break;
+                    case 4: initSlide5Charts(); break;
+                    case 5: initSlide6Charts(); break;
+                    case 6: initSlide7Charts(); break;
+                    case 7: initSlide8Charts(); break;
+                }
+                chartsInitialized[slideId] = true;
+            } catch (error) {
+                console.log('Chart initialization skipped for slide', currentSlideIndex + 1);
+            }
+        }
+        
+        // Slide 3: Rendimiento por categorías
+        function initSlide3Charts() {
+            const ctx = document.getElementById('slideTemasChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Desarrollo\nProfesional', 'Propuesta\nde Valor', 'Sostenibilidad\ny ASG', 'Categorías\nComerciales', 'Fundación\nCoppel'],
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: [14.25, 5.06, 3.92, 3.07, 0.0],
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderWidth: 3,
+                        borderColor: '#fff',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Engagement Rate por Tema',
+                            font: { size: 18, weight: 'bold' }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            max: 16,
+                            grid: { color: 'rgba(0,0,0,0.1)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Slide 4: Comparación mensual
+        function initSlide4Charts() {
+            const ctx = document.getElementById('slideMonthlyChart');
+            if (!ctx) return;
+            
+            const junioTweets = tweetsData.filter(t => t.date.includes('/06/'));
+            const julioTweets = tweetsData.filter(t => t.date.includes('/07/'));
+            
+            const junioER = junioTweets.reduce((sum, t) => sum + t.engagement_rate, 0) / junioTweets.length;
+            const julioER = julioTweets.reduce((sum, t) => sum + t.engagement_rate, 0) / julioTweets.length;
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Junio 2025', 'Julio 2025'],
+                    datasets: [{
+                        label: 'Engagement Rate Promedio (%)',
+                        data: [junioER, julioER],
+                        borderColor: '#e74c3c',
+                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                        borderWidth: 6,
+                        pointRadius: 12,
+                        pointHoverRadius: 16,
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Evolución del Engagement Rate',
+                            font: { size: 18, weight: 'bold' }
+                        }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            max: 10,
+                            grid: { color: 'rgba(0,0,0,0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Slide 5: Pilares estratégicos
+        function initSlide5Charts() {
+            const ctx = document.getElementById('slidePilaresChart');
+            if (!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Marca Empleadora', 'Comunidad', 'Omnicanalidad'],
+                    datasets: [{
+                        data: [7.36, 3.27, 3.07],
+                        backgroundColor: ['#3498db', '#e67e22', '#1abc9c'],
+                        borderWidth: 5,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Engagement Rate por Pilar Estratégico',
+                            font: { size: 18, weight: 'bold' }
+                        },
+                        legend: {
+                            position: 'bottom',
+                            labels: { font: { size: 14 } }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Slide 6: Top performers
+        function initSlide6Charts() {
+            const ctx = document.getElementById('slideTopChart');
+            if (!ctx) return;
+            
+            const sortedTweets = [...tweetsData].sort((a, b) => b.engagement_rate - a.engagement_rate);
+            const top5 = sortedTweets.slice(0, 5);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['#1', '#2', '#3', '#4', '#5'],
+                    datasets: [{
+                        label: 'Engagement Rate (%)',
+                        data: top5.map(t => t.engagement_rate),
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#3498db'],
+                        borderWidth: 3,
+                        borderColor: '#fff',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Top 5 Publicaciones por Engagement Rate',
+                            font: { size: 18, weight: 'bold' }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: { 
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0,0,0,0.1)' }
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Slide 7: Distribución de alcance
+        function initSlide7Charts() {
+            // Impresiones por tema
+            const impressionsCtx = document.getElementById('slideImpressionsChart');
+            if (!impressionsCtx) return;
+            
+            const temas = ['DESARROLLO PROFESIONAL', 'PROPUESTA DE VALOR', 'SOSTENIBILIDAD Y ASG', 'CATEGORÍAS COMERCIALES Y FINANCIERAS', 'FUNDACIÓN COPPEL'];
+            const impressionsByTema = temas.map(tema => {
+                return tweetsData.filter(t => t.tema === tema).reduce((sum, t) => sum + t.impresiones, 0);
+            });
+            
+            new Chart(impressionsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Desarrollo Prof.', 'Propuesta Valor', 'Sostenibilidad', 'Comerciales', 'Fundación'],
+                    datasets: [{
+                        data: impressionsByTema,
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Distribución de Impresiones',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        legend: { position: 'bottom', labels: { font: { size: 12 } } }
+                    }
+                }
+            });
+            
+            // Engagement total por tema
+            const engagementCtx = document.getElementById('slideEngagementChart');
+            if (!engagementCtx) return;
+            
+            const engagementByTema = temas.map(tema => {
+                return tweetsData.filter(t => t.tema === tema).reduce((sum, t) => sum + t.interacciones, 0);
+            });
+            
+            new Chart(engagementCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Desarrollo Prof.', 'Propuesta Valor', 'Sostenibilidad', 'Comerciales', 'Fundación'],
+                    datasets: [{
+                        data: engagementByTema,
+                        backgroundColor: ['#2ecc71', '#f39c12', '#e74c3c', '#9b59b6', '#95a5a6'],
+                        borderWidth: 3,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Distribución de Interacciones',
+                            font: { size: 16, weight: 'bold' }
+                        },
+                        legend: { position: 'bottom', labels: { font: { size: 12 } } }
+                    }
+                }
+            });
+        }
+        
+        // Slide 8: Patrones temporales
+        function initSlide8Charts() {
+            const ctx = document.getElementById('slideTemporalChart');
+            if (!ctx) return;
+            
+            const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+            const engagementPorDia = [9.41, 0, 0, 6.90, 4.24, 0, 0];
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: diasSemana,
+                    datasets: [{
+                        label: 'Engagement Rate Promedio (%)',
+                        data: engagementPorDia,
+                        backgroundColor: 'rgba(52, 152, 219, 0.3)',
+                        borderColor: '#3498db',
+                        borderWidth: 4,
+                        pointRadius: 8,
+                        pointHoverRadius: 12,
+                        pointBackgroundColor: '#3498db'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: { 
+                            display: true, 
+                            text: 'Rendimiento por Día de la Semana',
+                            font: { size: 18, weight: 'bold' }
+                        },
+                        legend: { display: false }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 12,
+                            grid: { color: 'rgba(0,0,0,0.1)' }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Función para inicializar la presentación
+        function initPresentation() {
+            console.log('Inicializando presentación...');
+            console.log('Total slides encontrados:', slides.length);
+            
+            // Resetear índice actual
+            currentSlideIndex = 0;
+            
+            // Asegurar que solo el primer slide esté activo
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === 0) {
+                    slide.classList.add('active');
+                    console.log('Slide 1 activado');
+                }
+            });
+            
+            // Actualizar navegación
+            updateNavigation();
+            
+            // Inicializar gráficos del primer slide si es necesario
+            setTimeout(() => {
+                initCurrentSlideCharts();
+            }, 500);
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            initPresentation();
+        });
+    </script>
+</body>
+</html>
