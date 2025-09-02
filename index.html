@@ -77,16 +77,18 @@
         }
         
         .tab-content {
-            display: none;
+            display: none !important;
             background: white;
             padding: 30px;
             border-radius: 0 0 15px 15px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.1);
             min-height: 600px;
+            position: relative;
+            z-index: 1;
         }
         
         .tab-content.active {
-            display: block;
+            display: block !important;
         }
         
         .analysis-section {
@@ -285,6 +287,28 @@
             text-decoration: underline;
         }
         
+        .sortable {
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+        
+        .sortable:hover {
+            background-color: rgba(102, 126, 234, 0.1);
+        }
+        
+        .sortable.asc::after {
+            content: " ↑";
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        
+        .sortable.desc::after {
+            content: " ↓";
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
         @media (max-width: 768px) {
             .header h1 { font-size: 2rem; }
             .container { padding: 10px; }
@@ -312,75 +336,94 @@
         
         <!-- TAB: ANÁLISIS DETALLADO -->
         <div id="analysis" class="tab-content active">
-            <h2>📋 Análisis Detallado de Insights</h2>
+            <h2>📋 Análisis Narrativo y Contextual del Contenido</h2>
             
             <div class="analysis-section">
-                <h3>🔍 Hallazgos Principales del Análisis</h3>
-                <p>El análisis de <span class="number-highlight">16 publicaciones</span> de Twitter/X de Coppel durante junio-julio 2025 revela patrones interesantes con oportunidades de optimización. Con un total de <span class="number-highlight">4.47 millones de impresiones</span> y <span class="number-highlight">1,405 interacciones</span>, el engagement rate promedio de <span class="number-highlight">4.21%</span> muestra una variabilidad que presenta oportunidades para potenciar el rendimiento.</p>
+                <h3>🔍 Panorama General: Junio vs Julio 2025 - El Viaje del Contenido</h3>
+                <p><strong>📢 Contexto Clave:</strong> Este análisis corresponde a <span class="number-highlight">contenido orgánico sin pauta publicitaria</span>, donde cada publicación compite únicamente por su relevancia natural y resonancia con la audiencia.</p>
                 
-                <p>La diferencia entre junio (7.60% ER) y julio (1.59% ER) representa una oportunidad de aprendizaje valiosa para optimizar la estrategia y mejorar el balance entre alcance e interacción en futuras campañas.</p>
+                <p><strong>🎭 Junio 2025 - El Mes de la Revelación:</strong> Junio se caracterizó por ser un mes de <span class="number-highlight">eventos reales y transparencia corporativa</span>. Tuvimos una conferencia de prensa sobre la nueva identidad visual de Coppel con presencia de @Milenio, @heraldodemexico y El País. El contenido sobre eventos reales, transparencia en procesos internos y agradecimientos públicos generó un engagement rate promedio de <span class="number-highlight">7.60%</span>, demostrando que la audiencia valora cuando las marcas abren sus puertas y comparten el "detrás de cámaras" de sus transformaciones.</p>
+                
+                <p><strong>🎯 Julio 2025 - El Mes de los Anuncios Estratégicos:</strong> Julio se enfocó en <span class="number-highlight">contenido institucional y anuncios estratégicos</span>, con un pico de interacciones (458) gracias al anuncio de Diego Coppel Sullivan como Director General. El contenido institucional funcionó cuando se enfocó en personas específicas y cambios de liderazgo, pero el engagement rate promedio cayó a <span class="number-highlight">1.59%</span>. Esta diferencia de casi 5 puntos porcentuales entre ambos meses revela un patrón claro: <em>el contenido basado en eventos reales y transparencia genera mayor engagement natural que los anuncios corporativos tradicionales</em>.</p>
+                
+                <p>Con un total de <span class="number-highlight">4.47 millones de impresiones</span> y <span class="number-highlight">1,405 interacciones</span> acumuladas, el engagement rate general del período fue de <span class="number-highlight">4.21%</span>, presentando una oportunidad valiosa para optimizar la estrategia de contenido orgánico.</p>
+            </div>
+
+            <div class="success">
+                <h3>🧠 Insights Narrativos: Cómo el Contenido Conecta con la Audiencia</h3>
+                <p><strong>🎭 La Narrativa de Transformación:</strong> La audiencia responde positivamente cuando Coppel explica el "porqué" detrás de decisiones estratégicas, conectándolas con beneficios humanos. Las publicaciones sobre inversión ($80 mmdp) y evolución de marca funcionaron porque no solo anunciaban cambios, sino que explicaban su propósito social ("mejorar la vida de las personas").</p>
+                
+                <p><strong>👥 Liderazgo Humanizado:</strong> Los anuncios sobre estructura directiva funcionan cuando se presentan como evolución natural y continuidad, no solo como cambios administrativos. El nombramiento de Diego Coppel generó 458 interacciones porque se enfocó en la visión de futuro y la gobernanza profesional, no solo en el cambio de persona.</p>
+                
+                <p><strong>💝 Propósito sobre Producto:</strong> El contenido que enfatiza valores sociales y propósito empresarial genera más engagement que las descripciones directas de productos o servicios. Las iniciativas de Fundación Coppel, aunque valiosas socialmente, necesitan storytelling más personal para conectar emocionalmente.</p>
+                
+                <p><strong>🔓 Transparencia Corporativa:</strong> Los agradecimientos públicos, reuniones con medios y apertura sobre procesos internos construyen credibilidad y cercanía. La conferencia de prensa de junio demostró que mostrar el "detrás de cámaras" genera confianza.</p>
             </div>
             
             <div class="analysis-section">
-                <h3>🏆 Mejores Categorías de Contenido - Evidencia Específica</h3>
+                <h3>🏆 Top 3 Publicaciones: Análisis Narrativo de Éxito</h3>
                 
-                <p><strong>1. DESARROLLO PROFESIONAL</strong> - Líder absoluto con <span class="number-highlight">14.25% ER</span></p>
-                <div class="tweet-quote">
-                    <strong>Evidencia (14/07/2025):</strong> "#GrupoCoppel anuncia su nueva estructura de liderazgo: Diego Coppel Sullivan asume la Dirección General y Agustín Coppel Luken permanece como Presidente del Consejo"
-                    <br><strong>Resultado:</strong> 458 interacciones con solo 3,215 impresiones
-                </div>
+                <p><strong>🥇 1. Inversión $80 mmdp (15.11% ER - 13 junio):</strong></p>
+                <ul>
+                    <li><strong>Narrativa:</strong> "Transformación integral con propósito social"</li>
+                    <li><strong>Fórmula de Éxito:</strong> Dato financiero concreto + Plan estratégico + Impacto humano</li>
+                    <li><strong>Por qué Funcionó:</strong> Combinó la frialdad de los números ($80 mmdp) con la calidez del propósito ("mejorar la vida de las personas"), creando una narrativa que conecta la estrategia empresarial con el beneficio social</li>
+                    <li><strong>Lección:</strong> Los anuncios financieros funcionan cuando se humanizan con propósito social</li>
+                </ul>
                 
-                <p><strong>2. PROPUESTA DE VALOR</strong> - Segundo lugar con <span class="number-highlight">5.06% ER promedio</span></p>
-                <div class="tweet-quote">
-                    <strong>Evidencia (12/06/2025):</strong> "Presentamos la evolución de nuestra identidad visual: una llave más versátil y contemporánea que refleja lo que somos hoy… #TúEresLaLlave"
-                    <br><strong>Resultado:</strong> 13.8% ER, 286 interacciones
-                </div>
+                <p><strong>🥈 2. Nueva estructura directiva (14.25% ER - 14 julio):</strong></p>
+                <ul>
+                    <li><strong>Narrativa:</strong> "Evolución del liderazgo para el futuro"</li>
+                    <li><strong>Fórmula de Éxito:</strong> Cambio organizacional + Explicación del propósito + Visión de futuro</li>
+                    <li><strong>Por qué Funcionó:</strong> Se enfocó en la evolución y gobernanza profesional, no solo en el cambio de persona. La audiencia valora la continuidad y la planificación estratégica</li>
+                    <li><strong>Lección:</strong> Los cambios de liderazgo funcionan cuando se explican como evolución, no como reemplazo</li>
+                </ul>
                 
-                <p><strong>3. SOSTENIBILIDAD Y ASG</strong> - Rendimiento moderado <span class="number-highlight">3.92% ER</span></p>
-                <div class="tweet-quote">
-                    <strong>Evidencia (16/06/2025):</strong> "Una marca más ágil, cercana y conectada con las personas. Gracias a quienes fueron parte de este momento."
-                    <br><strong>Resultado:</strong> 10.7% ER, conexión emocional efectiva
-                </div>
+                <p><strong>🥉 3. Evolución identidad visual (13.8% ER - 12 junio):</strong></p>
+                <ul>
+                    <li><strong>Narrativa:</strong> "Crecimiento visual que mantiene valores"</li>
+                    <li><strong>Fórmula de Éxito:</strong> Cambio corporativo + Explicación emocional + Call to action</li>
+                    <li><strong>Por qué Funcionó:</strong> Conectó el cambio visual con valores emocionales (cercanía, confianza) y usó el hashtag #TúEresLaLlave para crear comunidad</li>
+                    <li><strong>Lección:</strong> Los cambios de marca funcionan cuando se conectan con valores emocionales existentes</li>
+                </ul>
             </div>
             
-            <div class="analysis-section">
-                <h3>📈 Categorías con Potencial de Mejora</h3>
+            <div class="recommendation">
+                <h3>🎯 Patrones de Contenido que Funcionan vs. Los que No</h3>
                 
-                <p><strong>1. FUNDACIÓN COPPEL</strong> - Oportunidad de reformulación con <span class="number-highlight">0% ER</span></p>
-                <div class="tweet-quote">
-                    <strong>Ejemplo (25/07/2025):</strong> "Celebramos que, gracias al apoyo de Fundación Coppel y Fundación México en Harvard, Aracely Guzmán iniciará sus estudios en Harvard..."
-                    <br><strong>Métricas:</strong> 224,000 impresiones, 8 interacciones - potencial para storytelling más cercano
-                </div>
+                <p><strong>✅ Contenido que Conecta:</strong></p>
+                <ul>
+                    <li><strong>Eventos Reales:</strong> Conferencias de prensa, reuniones con medios, lanzamientos oficiales</li>
+                    <li><strong>Transparencia:</strong> Agradecimientos públicos, explicación de procesos, "detrás de cámaras"</li>
+                    <li><strong>Propósito Social:</strong> Inversiones con impacto humano, cambios que benefician a la comunidad</li>
+                    <li><strong>Liderazgo Humanizado:</strong> Cambios organizacionales explicados como evolución, no como reemplazo</li>
+                </ul>
                 
-                <p><strong>2. CATEGORÍAS COMERCIALES (Julio)</strong> - Espacio para optimización de messaging</p>
-                <div class="tweet-quote">
-                    <strong>Ejemplo (04/07/2025):</strong> "🏅Grupo Coppel ocupa el primer lugar en el Índice de Integridad Corporativa 500"
-                    <br><strong>Métricas:</strong> 962,000 impresiones, 49 interacciones - oportunidad para humanizar logros corporativos
-                </div>
-                
-                <p><strong>3. CONTENIDO DE MOVILIDAD</strong> - Potencial para conectar con experiencias de usuario</p>
-                <div class="tweet-quote">
-                    <strong>Ejemplo (23/07/2025):</strong> "¡Queremos seguir impulsando la movilidad de millones de mexicanos con Coppel Motos! 🏍️"
-                    <br><strong>Métricas:</strong> 632,000 impresiones, 13 interacciones - espacio para incluir testimonios reales
-                </div>
+                <p><strong>❌ Contenido que Necesita Evolución:</strong></p>
+                <ul>
+                    <li><strong>Anuncios Corporativos:</strong> Reconocimientos sin conexión con beneficios para clientes</li>
+                    <li><strong>Iniciativas Sociales:</strong> Programas valiosos pero sin storytelling personal (arte mexicano, becas Harvard)</li>
+                    <li><strong>Servicios Financieros:</strong> Ofertas sin casos de éxito o testimonios reales</li>
+                    <li><strong>Repetición de Anuncios:</strong> El mismo mensaje con diferentes enfoques (estructura directiva julio 18 vs julio 14)</li>
+                </ul>
             </div>
             
-            <div class="analysis-section">
-                <h3>📊 Números Clave del Análisis</h3>
-                <p><strong>Diversidad en Rendimiento:</strong> Coeficiente de variación de <span class="number-highlight">138.3%</span> muestra potencial para estandarizar elementos exitosos</p>
-                <p><strong>Patrón Alcance-Engagement:</strong> <span class="number-highlight">-0.618</span> correlación sugiere oportunidades para optimizar el balance entre visibilidad y participación</p>
-                <p><strong>Potencial de Escalamiento:</strong> Solo <span class="number-highlight">6.25%</span> del contenido (1/16) está en la categoría más exitosa, presentando oportunidad de crecimiento</p>
-                <p><strong>ROI Comprobado:</strong> Contenido de liderazgo genera <span class="number-highlight">3.4x más engagement</span> que el promedio</p>
-                <p><strong>Oportunidad de Crecimiento:</strong> Incrementar "Desarrollo Profesional" podría mejorar ER general en <span class="number-highlight">40-60%</span></p>
-            </div>
-            
-            <div class="analysis-section">
-                <h3>🎯 Insights Estratégicos por Pilar</h3>
-                <p><strong>MARCA EMPLEADORA (7.36% ER):</strong> Contenido interno y de talento humano conecta efectivamente con la audiencia. Oportunidad de amplificar historias de liderazgo y cultura organizacional.</p>
+            <div class="alert">
+                <h3>📊 Análisis de Categorías y Pilares: Dónde Está el Engagement</h3>
                 
-                <p><strong>COMUNIDAD (3.27% ER):</strong> Impacto social genera engagement consistente. Potencial para enriquecer con testimonios específicos y métricas de impacto tangible.</p>
+                <p><strong>🏆 Pilares con Mayor Rendimiento:</strong></p>
+                <ul>
+                    <li><strong>MARCA EMPLEADORA (7.36% ER):</strong> Incluye evolución de identidad visual, nuevos liderazgos y propósito organizacional. La audiencia valora cuando Coppel muestra su lado humano y los "porqués" detrás de decisiones estratégicas.</li>
+                    <li><strong>OMNICANALIDAD (3.13% ER):</strong> Centrado en inversiones estratégicas y transformación digital. Aunque importante para stakeholders, requiere narrativas más cercanas al consumidor final.</li>
+                    <li><strong>COMUNIDAD (2.27% ER):</strong> Incluye arte mexicano, sostenibilidad y agradecimientos. Oportunidad de conectar mejor estas iniciativas con historias personales y beneficios tangibles.</li>
+                </ul>
                 
-                <p><strong>OMNICANALIDAD (3.07% ER):</strong> Contenido comercial presenta espacio para evolucionar. Oportunidad de integrar storytelling con propuesta de valor más conectada emocionalmente.</p>
+                <p><strong>🎭 Temas que Resonan:</strong></p>
+                <ul>
+                    <li><strong>DESARROLLO PROFESIONAL (14.25% ER):</strong> Liderazgo, evolución organizacional y visión de futuro</li>
+                    <li><strong>PROPUESTA DE VALOR (8.60% ER):</strong> Cambios de marca, agradecimientos y transparencia</li>
+                    <li><strong>SOSTENIBILIDAD Y ASG (3.92% ER):</strong> Iniciativas sociales y reuniones con stakeholders</li>
+                </ul>
             </div>
         </div>
         
@@ -415,18 +458,19 @@
             </div>
             
             <div class="success">
-                <h3>✅ Oportunidades de Crecimiento</h3>
-                <p><strong>Desarrollo Profesional:</strong> 14.25% ER con potencial de escalamiento (actualmente 1 publicación)</p>
-                <p><strong>Marca Empleadora:</strong> Pilar más efectivo con 7.36% ER promedio</p>
-                <p><strong>Timing Optimizado:</strong> Lunes y Jueves muestran mejor rendimiento (9.41% y 6.90%)</p>
+                <h3>✅ Insights de Contenido de Alto Rendimiento</h3>
+                <p><strong>Desarrollo Profesional (14.25% ER):</strong> Anuncio de nueva estructura directiva con Diego Coppel como Director General. Este tipo de contenido sobre liderazgo y evolución organizacional genera alta confianza y engagement.</p>
+                <p><strong>Marca Empleadora (7.36% ER promedio):</strong> Contenido sobre identidad visual, evolución de marca y propósito empresarial. Las publicaciones que muestran "el porqué" detrás de los cambios conectan emocionalmente con la audiencia.</p>
+                <p><strong>Transformación Digital y Financiera:</strong> Las publicaciones sobre inversión de $80 mmdp y planes de expansión (15.11% ER) demuestran que el contenido sobre crecimiento y visión de futuro genera interés significativo.</p>
             </div>
             
             <div class="recommendation">
-                <h3>🎯 Recomendaciones Estratégicas</h3>
-                <p><strong>1.</strong> Amplificar contenido "Desarrollo Profesional" (2-3 posts mensuales)</p>
-                <p><strong>2.</strong> Analizar factores diferenciadores entre junio y julio para optimizar approach</p>
-                <p><strong>3.</strong> Evolucionar estrategia "Fundación Coppel" con storytelling más cercano</p>
-                <p><strong>4.</strong> Aprovechar calendario editorial basado en días de mayor engagement</p>
+                <h3>🎯 Recomendaciones Estratégicas Basadas en Contenido</h3>
+                <p><strong>1. Amplificar Liderazgo y Estructura Organizacional:</strong> El contenido sobre nuevos nombramientos directivos generó el mayor engagement (14.25%). Crear más contenido sobre visión de liderazgo, toma de decisiones y evolución organizacional.</p>
+                <p><strong>2. Potenciar Narrativas de Transformación:</strong> Las publicaciones sobre inversión ($80 mmdp) y evolución de marca obtuvieron alta respuesta. Desarrollar contenido que explique el "porqué" detrás de las decisiones estratégicas.</p>
+                <p><strong>3. Evolucionar Contenido de Fundación:</strong> Aunque las iniciativas educativas (Harvard, arte mexicano) son valiosas socialmente, requieren storytelling más personal y emocional para aumentar engagement.</p>
+                <p><strong>4. Optimizar Contenido Comercial:</strong> Las publicaciones sobre productos/servicios tuvieron bajo engagement. Integrar más elementos humanos, beneficios tangibles y casos de éxito reales.</p>
+                <p><strong>5. Aprovechar Timing Estratégico:</strong> Publicar contenido de alto impacto los lunes y jueves cuando el engagement es 3-4x mayor.</p>
             </div>
         </div>
         
@@ -442,42 +486,63 @@
                 <canvas id="temasChart"></canvas>
             </div>
             <div class="chart-explanation">
-                <strong>🎯 Interpretación - Temas:</strong> "Desarrollo Profesional" lidera con 14.25% ER presentando oportunidad de escalamiento (actualmente 1 publicación). "Fundación Coppel" muestra potencial de mejora con approach renovado.
+                <strong>🎯 Interpretación - Temas con Contexto de Contenido:</strong> 
+                <br><strong>• Desarrollo Profesional (14.25% ER):</strong> La publicación sobre el nombramiento de Diego Coppel como Director General resonó fuertemente. El contenido sobre cambios de liderazgo, estructura organizacional y evolución empresarial genera alta credibilidad y confianza.
+                <br><strong>• Propuesta de Valor (8.60% ER):</strong> Contenido sobre evolución de identidad visual y agradecimientos a medios. Las publicaciones que humanizan la marca y muestran transparencia funcionan bien.
+                <br><strong>• Fundación Coppel (0% ER):</strong> Iniciativas educativas valiosas (becas Harvard) pero necesitan narrativa más personal y emocional para conectar.
             </div>
             
             <div class="chart-container">
                 <canvas id="pilaresChart"></canvas>
             </div>
             <div class="chart-explanation">
-                <strong>🏗️ Interpretación - Pilares:</strong> "Marca Empleadora" destaca con 7.36% ER, validando que el contenido interno y de talento humano conecta efectivamente con la audiencia y presenta potencial de amplificación.
+                <strong>🏗️ Interpretación - Pilares con Análisis de Contenido:</strong>
+                <br><strong>• Marca Empleadora (7.36% ER):</strong> Incluye contenido sobre evolución de identidad visual, nuevos liderazgos y propósito organizacional. La audiencia valora cuando Coppel muestra su lado humano y los "porqués" detrás de decisiones estratégicas.
+                <br><strong>• Omnicanalidad (3.13% ER):</strong> Contenido sobre inversiones, transformación digital y planes de expansión. Aunque importante para stakeholders, requiere narrativas más cercanas al consumidor final.
+                <br><strong>• Comunidad (2.27% ER):</strong> Incluye arte mexicano, sostenibilidad y agradecimientos. Oportunidad de conectar mejor estas iniciativas con historias personales y beneficios tangibles.
             </div>
             
             <div class="chart-container">
                 <canvas id="vinculosChart"></canvas>
             </div>
             <div class="chart-explanation">
-                <strong>🔗 Interpretación - Vínculos de Negocio:</strong> "Impulsar al Talento" muestra la mayor efectividad (7.36% ER), mientras que el contenido comercial presenta oportunidades de evolución hacia enfoques más conectados con la audiencia.
+                <strong>🔗 Interpretación - Vínculos de Negocio con Análisis Temático:</strong>
+                <br><strong>• Impulsar al Talento (7.36% ER):</strong> Contenido sobre evolución de marca, nuevos liderazgos y propósito empresarial. La audiencia responde positivamente cuando Coppel comparte su filosofía de trabajo y desarrollo humano.
+                <br><strong>• Visibilizar Oferta de Valor (2.65% ER):</strong> Incluye inversiones ($80 mmdp), reconocimientos empresariales y servicios financieros. Requiere humanizar estos logros con casos de uso reales y beneficios para clientes.
+                <br><strong>• Contribuir y Reducir Riesgos (2.32% ER):</strong> Arte mexicano, sostenibilidad, movilidad y expansión de agencias. Oportunidad de conectar estas iniciativas con impacto directo en las comunidades.
             </div>
             
             <div class="chart-container">
                 <canvas id="topBottomChart"></canvas>
             </div>
             <div class="chart-explanation">
-                <strong>🏆 Top 5 vs Bottom 5:</strong> La variación en rendimiento entre mejores y peores publicaciones (15.11% vs 0% ER) presenta oportunidades para aplicar los elementos exitosos en futuras publicaciones.
+                <strong>🏆 Análisis Comparativo - Contenido de Alto vs Bajo Rendimiento:</strong>
+                <br><strong>Top 3 Publicaciones (Contexto de Contenido):</strong>
+                <br>1. <strong>Inversión $80 mmdp (15.11% ER):</strong> Anuncio de transformación integral con enfoque en digitalización y sostenibilidad. Combina datos concretos con propósito social.
+                <br>2. <strong>Nueva estructura directiva (14.25% ER):</strong> Nombramiento de Diego Coppel con enfoque en evolución y gobernanza. Genera confianza al mostrar continuidad y profesionalización.
+                <br>3. <strong>Evolución de identidad visual (13.8% ER):</strong> Presentación de nueva imagen con mensaje emocional sobre cercanía y confianza. Conecta cambio visual con valores humanos.
+                
+                <br><br><strong>Patrón de Éxito:</strong> Las publicaciones exitosas combinan anuncios estratégicos importantes con narrativas que explican el beneficio humano o social, usando un tono cercano y personal.
             </div>
             
             <div class="chart-container">
                 <canvas id="impressionsByThemeChart"></canvas>
             </div>
             <div class="chart-explanation">
-                <strong>📊 Impresiones por Tema:</strong> Análisis del alcance obtenido por cada categoría temática, mostrando la distribución de visibilidad y oportunidades de optimización de alcance.
+                <strong>📊 Análisis de Alcance por Contenido Temático:</strong>
+                <br><strong>• Categorías Comerciales (1.74M impresiones):</strong> Inversiones, reconocimientos empresariales y servicios. Alto alcance pero bajo engagement sugiere que el contenido corporativo necesita humanización.
+                <br><strong>• Desarrollo Profesional (3.2K impresiones):</strong> Bajo alcance pero altísimo engagement (14.25%). El contenido sobre liderazgo tiene potencial de amplificación significativo.
+                <br><strong>• Propuesta de Valor (1.85M impresiones):</strong> Evolución de marca y agradecimientos. Balance positivo entre alcance y engagement cuando el tono es cercano y transparente.
             </div>
             
             <div class="chart-container">
                 <canvas id="totalEngagementByThemeChart"></canvas>
             </div>
             <div class="chart-explanation">
-                <strong>🎯 Engagement Total por Tema:</strong> Volumen absoluto de interacciones generadas por cada categoría, revelando qué temas generan mayor participación de la audiencia.
+                <strong>🎯 Volumen de Interacciones por Tipo de Contenido:</strong>
+                <br><strong>• Desarrollo Profesional (458 interacciones):</strong> La publicación sobre Diego Coppel como Director General generó la mayor participación. El contenido sobre cambios de liderazgo, futuro empresarial y evolución organizacional resuena fuertemente.
+                <br><strong>• Propuesta de Valor (390 interacciones):</strong> Evolución de identidad visual y agradecimientos a medios. La transparencia en procesos de cambio y reconocimiento público genera confianza.
+                <br><strong>• Categorías Comerciales (300 interacciones):</strong> Inversiones y servicios financieros. Oportunidad de humanizar con casos de éxito y beneficios reales para clientes.
             </div>
         </div>
         
@@ -486,7 +551,19 @@
             <h2>📱 Explorador Interactivo de Tweets</h2>
             
             <div class="chart-explanation">
-                <strong>🔍 Explorador de Contenido:</strong> Tabla interactiva con todos los tweets analizados. Utiliza los filtros para explorar patrones específicos por tema, fecha, engagement o cualquier métrica relevante.
+                <strong>🔍 Explorador de Contenido con Contexto:</strong> Tabla interactiva con todos los tweets analizados, incluyendo el texto completo para entender qué tipo de contenido genera mayor engagement. Utiliza los filtros para explorar patrones específicos.
+            </div>
+            
+            <div class="success">
+                <h3>🎯 Ejemplos de Contenido de Alto Rendimiento</h3>
+                <p><strong>Más Exitoso (15.11% ER):</strong> "En Grupo Coppel destinaremos $80 mmdp en 5 años para fortalecer nuestra transformación integral. Impulsamos la expansión física, la digitalización y la sostenibilidad, con un solo propósito: mejorar la vida de las personas."</p>
+                <p><strong>Clave del Éxito:</strong> Combina datos concretos ($80 mmdp) con propósito emocional ("mejorar la vida de las personas") y visión de futuro.</p>
+            </div>
+            
+            <div class="alert">
+                <h3>⚠️ Ejemplo de Contenido con Potencial de Mejora</h3>
+                <p><strong>Bajo Rendimiento (0% ER):</strong> "Facilitamos el acceso al financiamiento y a un transporte eficiente. En 2025, Coppel tendrá 100 nuevas agencias especializadas."</p>
+                <p><strong>Oportunidad:</strong> Agregar casos de éxito específicos, testimonios de clientes o historias de emprendedores que han crecido con estos servicios.</p>
             </div>
             
             <div class="filters">
@@ -534,9 +611,9 @@
                             <th>Fecha</th>
                             <th>Contenido del Tweet</th>
                             <th>URL</th>
-                            <th>ER %</th>
-                            <th>Impresiones</th>
-                            <th>Interacciones</th>
+                            <th class="sortable" onclick="sortTable(3)">ER % ↕</th>
+                            <th class="sortable" onclick="sortTable(4)">Impresiones ↕</th>
+                            <th class="sortable" onclick="sortTable(5)">Interacciones ↕</th>
                             <th>Tema</th>
                             <th>Pilar</th>
                             <th>Vínculo</th>
@@ -568,9 +645,10 @@
             </div>
             
             <div class="alert">
-                <h3>📉 Variación en Engagement - Julio</h3>
-                <p><strong>Diferencia del 79.1% en engagement</strong> comparado con el aumento del 36,729% en impresiones</p>
-                <p>Presenta oportunidad de optimizar el balance entre alcance y participación de la audiencia</p>
+                <h3>📉 Análisis Temporal de Contenido Orgánico (Sin Pauta)</h3>
+                <p><strong>Junio - Eventos de Lanzamiento:</strong> Conferencia de prensa para nueva identidad visual con presencia de @Milenio, @heraldodemexico y El País. El contenido sobre eventos reales y transparencia corporativa generó alto engagement natural.</p>
+                <p><strong>Julio - Anuncios Estratégicos:</strong> Pico de interacciones (458) con anuncio de Diego Coppel Sullivan como Director General. El contenido institucional funcionó cuando se enfocó en personas específicas y cambios de liderazgo.</p>
+                <p><strong>Patrón Orgánico:</strong> El contenido sin promoción pagada funciona mejor cuando incluye eventos reales, personas específicas y contexto humano detrás de decisiones corporativas.</p>
             </div>
             
             <div class="chart-container">
@@ -611,19 +689,20 @@
             </div>
             
             <div class="success">
-                <h3>✅ Patrones de Éxito Validados</h3>
-                <p><strong>Contenido de Liderazgo:</strong> Publicaciones sobre cambios directivos conectan efectivamente con la audiencia</p>
-                <p><strong>Anuncios Estratégicos:</strong> Inversiones y transformaciones corporativas generan interés y participación</p>
-                <p><strong>Identidad Visual:</strong> Evolución de marca demuestra capacidad de generar engagement auténtico</p>
+                <h3>✅ Patrones de Contenido que Funcionan - Análisis Específico</h3>
+                <p><strong>1. Liderazgo con Propósito (14.25% ER):</strong> "Diego Coppel Sullivan asume la Dirección General" - El contenido sobre cambios de liderazgo funciona cuando se conecta con visión de futuro y continuidad empresarial.</p>
+                <p><strong>2. Transformación con Impacto Social (15.11% ER):</strong> "$80 mmdp para transformación integral... mejorar la vida de las personas" - Los anuncios financieros funcionan cuando se ligan directamente a beneficios humanos y sociales.</p>
+                <p><strong>3. Evolución de Marca Humanizada (13.8% ER):</strong> "Una llave más versátil... con la cercanía y confianza que nos caracterizan" - Los cambios corporativos conectan cuando se explica el valor emocional para el cliente.</p>
+                <p><strong>4. Transparencia en Medios (10.7% ER):</strong> Reuniones con líderes creativos y agradecimientos públicos generan credibilidad y cercanía.</p>
             </div>
             
             <div class="recommendation">
-                <h3>🎯 Estrategia de Potenciación por Categoría</h3>
-                <p><strong>Desarrollo Profesional:</strong> Amplificar aprovechando ROI comprobado (14.25% ER)</p>
-                <p><strong>Propuesta de Valor:</strong> Mantener frecuencia, evolucionando el messaging hacia mayor conexión</p>
-                <p><strong>Sostenibilidad:</strong> Enriquecer con historias de impacto específicas y testimonios</p>
-                <p><strong>Comerciales:</strong> Evolucionar hacia enfoque value-driven con storytelling</p>
-                <p><strong>Fundación:</strong> Renovar approach con storytelling más cercano y emocional</p>
+                <h3>🎯 Estrategias Específicas por Tipo de Contenido</h3>
+                <p><strong>Desarrollo Profesional:</strong> Crear más contenido sobre visión empresarial, decisiones estratégicas y evolución organizacional. Funciona el formato: anuncio importante + explicación del propósito + impacto en clientes.</p>
+                <p><strong>Propuesta de Valor:</strong> Mantener el enfoque en transparencia y humanización de cambios. Incluir más "detrás de cámaras" de procesos de transformación y evolución.</p>
+                <p><strong>Sostenibilidad y ASG:</strong> Conectar iniciativas ambientales y sociales con historias personales de beneficiarios. El arte mexicano y programas educativos necesitan rostros humanos.</p>
+                <p><strong>Categorías Comerciales:</strong> Humanizar servicios financieros con testimonios reales, casos de éxito y beneficios tangibles para familias mexicanas.</p>
+                <p><strong>Fundación Coppel:</strong> Transformar iniciativas educativas y culturales en historias personales de impacto, mostrando beneficiarios reales y resultados tangibles.</p>
             </div>
         </div>
         
@@ -636,10 +715,10 @@
             </div>
             
             <div class="success">
-                <h3>🏆 Fórmulas de Contenido con Mayor Efectividad</h3>
-                <p><strong>1. Anuncios de Liderazgo + Transformación</strong> → Promedio 14% ER</p>
-                <p><strong>2. Inversiones Estratégicas + Visión Futuro</strong> → Promedio 13% ER</p>
-                <p><strong>3. Evolución de Marca + Propósito</strong> → Promedio 12% ER</p>
+                <h3>🏆 Fórmulas de Contenido Exitoso - Análisis Detallado</h3>
+                <p><strong>1. "Liderazgo + Visión de Futuro" (14.25% ER):</strong> Ejemplo exitoso: Nombramiento de Diego Coppel + explicación de evolución empresarial + enfoque en gobernanza. <em>Fórmula: Noticia + Contexto + Beneficio futuro</em></p>
+                <p><strong>2. "Inversión + Propósito Social" (15.11% ER):</strong> Ejemplo exitoso: $80 mmdp + transformación digital + "mejorar la vida de las personas". <em>Fórmula: Dato financiero + Plan estratégico + Impacto humano</em></p>
+                <p><strong>3. "Cambio de Marca + Valores" (13.8% ER):</strong> Ejemplo exitoso: Nueva identidad visual + "cercanía y confianza" + #TúEresLaLlave. <em>Fórmula: Cambio corporativo + Explicación emocional + Call to action</em></p>
             </div>
             
             <div class="recommendation">
@@ -658,11 +737,18 @@
                 <strong>📈 Factores de Éxito:</strong> Análisis de elementos que contribuyen al alto engagement, incluyendo timing, temas, y estructura de contenido.
             </div>
             
+            <div class="alert">
+                <h3>⚠️ Contenido de Bajo Rendimiento - Oportunidades de Mejora</h3>
+                <p><strong>Arte Mexicano y FONART (0% ER):</strong> "14 años promoviendo el arte mexicano, 20 mil piezas adquiridas" - Iniciativa valiosa pero necesita storytelling sobre artesanos específicos, familias beneficiadas o impacto en comunidades.</p>
+                <p><strong>Servicios Financieros (0% ER):</strong> "Facilitamos acceso al financiamiento, 100 nuevas agencias" - Requiere casos de éxito reales, testimonios de clientes o historias de emprendedores que han crecido con Coppel.</p>
+                <p><strong>Reconocimientos Corporativos (0.01% ER):</strong> "Primer lugar en Índice de Integridad" - Aunque importantes, necesitan conectarse con beneficios tangibles para clientes y comunidades.</p>
+            </div>
+
             <div class="recommendation">
-                <h3>🎯 Plan de Evolución 90 Días</h3>
-                <p><strong>Días 1-30:</strong> Incrementar contenido "Desarrollo Profesional" aprovechando ROI comprobado</p>
-                <p><strong>Días 31-60:</strong> Testear variaciones en contenido con potencial de mejora</p>
-                <p><strong>Días 61-90:</strong> Implementar sistema de seguimiento y optimización continua</p>
+                <h3>🎯 Plan de Evolución Basado en Contenido</h3>
+                <p><strong>Mes 1:</strong> Amplificar fórmulas exitosas (Liderazgo + Propósito, Inversión + Impacto Social)</p>
+                <p><strong>Mes 2:</strong> Humanizar contenido de bajo rendimiento con historias personales y beneficiarios reales</p>
+                <p><strong>Mes 3:</strong> Integrar sistema de medición continua y optimización basada en engagement temático</p>
             </div>
             
             <div class="success">
@@ -858,26 +944,39 @@
 
         // Funciones para navegación de tabs
         function showTab(tabName) {
-            // Ocultar todas las tabs
+            // Ocultar todas las tabs de contenido
             const tabContents = document.querySelectorAll('.tab-content');
-            tabContents.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+                tab.style.display = 'none';
+            });
             
+            // Desactivar todos los botones de tab
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => tab.classList.remove('active'));
             
             // Mostrar tab seleccionada
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
+            const selectedTab = document.getElementById(tabName);
+            if (selectedTab) {
+                selectedTab.classList.add('active');
+                selectedTab.style.display = 'block';
+            }
+            
+            // Activar botón de tab
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
             
             // Inicializar gráficos según la tab
             setTimeout(() => {
-                if (tabName === 'charts') initChartsTab();
-                if (tabName === 'monthly') initMonthlyTab();
-                if (tabName === 'categories') initCategoriesTab();
-                if (tabName === 'recommendations') initRecommendationsTab();
-                if (tabName === 'tweets') initTweetsTab();
-                if (tabName === 'analysis') {
-                    // No charts to initialize for text analysis
+                try {
+                    if (tabName === 'charts') initChartsTab();
+                    if (tabName === 'monthly') initMonthlyTab();
+                    if (tabName === 'categories') initCategoriesTab();
+                    if (tabName === 'recommendations') initRecommendationsTab();
+                    if (tabName === 'tweets') initTweetsTab();
+                } catch (error) {
+                    console.log('Error inicializando gráficos para tab:', tabName, error);
                 }
             }, 100);
         }
@@ -907,6 +1006,59 @@
             });
         }
 
+        // Variables globales para ordenamiento
+        let currentSortColumn = -1;
+        let currentSortDirection = 'asc';
+        
+        // Función de ordenamiento de tabla
+        function sortTable(columnIndex) {
+            const tbody = document.getElementById('tweetsBody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // Cambiar dirección si es la misma columna
+            if (currentSortColumn === columnIndex) {
+                currentSortDirection = currentSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSortColumn = columnIndex;
+                currentSortDirection = 'asc';
+            }
+            
+            // Limpiar indicadores de ordenamiento previos
+            document.querySelectorAll('.sortable').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
+            
+            // Agregar indicador de ordenamiento actual
+            const currentHeader = document.querySelector(`th:nth-child(${columnIndex + 1})`);
+            if (currentHeader) {
+                currentHeader.classList.add(currentSortDirection);
+            }
+            
+            // Ordenar filas
+            rows.sort((a, b) => {
+                let aValue = a.cells[columnIndex].textContent;
+                let bValue = b.cells[columnIndex].textContent;
+                
+                // Convertir a números si es necesario
+                if (columnIndex === 3) { // ER %
+                    aValue = parseFloat(aValue.replace('%', ''));
+                    bValue = parseFloat(bValue.replace('%', ''));
+                } else if (columnIndex === 4 || columnIndex === 5) { // Impresiones o Interacciones
+                    aValue = parseInt(aValue.replace(/,/g, ''));
+                    bValue = parseInt(bValue.replace(/,/g, ''));
+                }
+                
+                if (currentSortDirection === 'asc') {
+                    return aValue > bValue ? 1 : -1;
+                } else {
+                    return aValue < bValue ? 1 : -1;
+                }
+            });
+            
+            // Reordenar filas en la tabla
+            rows.forEach(row => tbody.appendChild(row));
+        }
+        
         // Función de filtrado de tabla
         function filterTable() {
             const temaFilter = document.getElementById('temaFilter').value;
@@ -1329,9 +1481,36 @@
             });
         }
 
+        // Función para inicializar el dashboard
+        function initDashboard() {
+            // Asegurar que solo el tab analysis esté activo al inicio
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+                tab.style.display = 'none';
+            });
+            
+            // Activar el tab de análisis por defecto
+            const analysisTab = document.getElementById('analysis');
+            if (analysisTab) {
+                analysisTab.classList.add('active');
+                analysisTab.style.display = 'block';
+            }
+            
+            // Activar el botón correspondiente
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Buscar y activar el primer botón de tab (análisis)
+            const firstTab = document.querySelector('.tab');
+            if (firstTab) {
+                firstTab.classList.add('active');
+            }
+        }
+
         // Inicializar dashboard
         document.addEventListener('DOMContentLoaded', function() {
-            initTweetsTab();
+            initDashboard();
         });
     </script>
 </body>
